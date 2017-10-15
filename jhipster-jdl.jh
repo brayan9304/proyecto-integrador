@@ -1,0 +1,36 @@
+
+entity Course {
+	id Long required,
+    name String required,
+    subject String required,
+    description String required
+}
+
+entity Session {
+	id Long required,
+    name String required,
+    description String required,
+    semester Integer required,
+    date ZonedDateTime required
+}
+
+entity Professor {
+	id Long required,
+    name String required,
+    lastname String
+}
+
+relationship OneToMany {
+	Course{session} to Session
+}
+
+relationship OneToMany {
+	Professor{course} to Course
+}
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with pi
