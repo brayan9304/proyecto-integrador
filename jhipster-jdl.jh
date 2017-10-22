@@ -15,9 +15,8 @@ entity Session {
 }
 
 entity Professor {
-	id Long required,
-    name String required,
-    lastname String
+	userName String required,
+    email String required
 }
 
 relationship OneToMany {

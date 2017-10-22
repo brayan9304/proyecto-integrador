@@ -40,11 +40,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ProyectoIntegradorApp.class)
 public class ProfessorResourceIntTest {
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_LASTNAME = "AAAAAAAAAA";
-    private static final String UPDATED_LASTNAME = "BBBBBBBBBB";
+    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
     @Autowired
     private ProfessorRepository professorRepository;
@@ -89,8 +89,8 @@ public class ProfessorResourceIntTest {
      */
     public static Professor createEntity(EntityManager em) {
         Professor professor = new Professor()
-            .name(DEFAULT_NAME)
-            .lastname(DEFAULT_LASTNAME);
+            .userName(DEFAULT_USER_NAME)
+            .email(DEFAULT_EMAIL);
         return professor;
     }
 
@@ -115,8 +115,8 @@ public class ProfessorResourceIntTest {
         List<Professor> professorList = professorRepository.findAll();
         assertThat(professorList).hasSize(databaseSizeBeforeCreate + 1);
         Professor testProfessor = professorList.get(professorList.size() - 1);
-        assertThat(testProfessor.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testProfessor.getLastname()).isEqualTo(DEFAULT_LASTNAME);
+        assertThat(testProfessor.getUserName()).isEqualTo(DEFAULT_USER_NAME);
+        assertThat(testProfessor.getEmail()).isEqualTo(DEFAULT_EMAIL);
     }
 
     @Test
@@ -141,10 +141,29 @@ public class ProfessorResourceIntTest {
 
     @Test
     @Transactional
-    public void checkNameIsRequired() throws Exception {
+    public void checkUserNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = professorRepository.findAll().size();
         // set the field null
-        professor.setName(null);
+        professor.setUserName(null);
+
+        // Create the Professor, which fails.
+        ProfessorDTO professorDTO = professorMapper.toDto(professor);
+
+        restProfessorMockMvc.perform(post("/api/professors")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Professor> professorList = professorRepository.findAll();
+        assertThat(professorList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEmailIsRequired() throws Exception {
+        int databaseSizeBeforeTest = professorRepository.findAll().size();
+        // set the field null
+        professor.setEmail(null);
 
         // Create the Professor, which fails.
         ProfessorDTO professorDTO = professorMapper.toDto(professor);
@@ -169,8 +188,8 @@ public class ProfessorResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(professor.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lastname").value(hasItem(DEFAULT_LASTNAME.toString())));
+            .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())));
     }
 
     @Test
@@ -184,8 +203,8 @@ public class ProfessorResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(professor.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.lastname").value(DEFAULT_LASTNAME.toString()));
+            .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME.toString()))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()));
     }
 
     @Test
@@ -206,8 +225,8 @@ public class ProfessorResourceIntTest {
         // Update the professor
         Professor updatedProfessor = professorRepository.findOne(professor.getId());
         updatedProfessor
-            .name(UPDATED_NAME)
-            .lastname(UPDATED_LASTNAME);
+            .userName(UPDATED_USER_NAME)
+            .email(UPDATED_EMAIL);
         ProfessorDTO professorDTO = professorMapper.toDto(updatedProfessor);
 
         restProfessorMockMvc.perform(put("/api/professors")
@@ -219,8 +238,8 @@ public class ProfessorResourceIntTest {
         List<Professor> professorList = professorRepository.findAll();
         assertThat(professorList).hasSize(databaseSizeBeforeUpdate);
         Professor testProfessor = professorList.get(professorList.size() - 1);
-        assertThat(testProfessor.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testProfessor.getLastname()).isEqualTo(UPDATED_LASTNAME);
+        assertThat(testProfessor.getUserName()).isEqualTo(UPDATED_USER_NAME);
+        assertThat(testProfessor.getEmail()).isEqualTo(UPDATED_EMAIL);
     }
 
     @Test

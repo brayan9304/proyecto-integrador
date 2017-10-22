@@ -23,11 +23,12 @@ public class Professor implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "user_name", nullable = false)
+    private String userName;
 
-    @Column(name = "lastname")
-    private String lastname;
+    @NotNull
+    @Column(name = "email", nullable = false)
+    private String email;
 
     @OneToMany(mappedBy = "professor")
     @JsonIgnore
@@ -42,30 +43,30 @@ public class Professor implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public Professor name(String name) {
-        this.name = name;
+    public Professor userName(String userName) {
+        this.userName = userName;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getEmail() {
+        return email;
     }
 
-    public Professor lastname(String lastname) {
-        this.lastname = lastname;
+    public Professor email(String email) {
+        this.email = email;
         return this;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Course> getCourses() {
@@ -118,8 +119,8 @@ public class Professor implements Serializable {
     public String toString() {
         return "Professor{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", lastname='" + getLastname() + "'" +
+            ", userName='" + getUserName() + "'" +
+            ", email='" + getEmail() + "'" +
             "}";
     }
 }

@@ -15,9 +15,10 @@ public class ProfessorDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String name;
+    private String userName;
 
-    private String lastname;
+    @NotNull
+    private String email;
 
     public Long getId() {
         return id;
@@ -27,20 +28,20 @@ public class ProfessorDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -68,8 +69,8 @@ public class ProfessorDTO implements Serializable {
     public String toString() {
         return "ProfessorDTO{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", lastname='" + getLastname() + "'" +
+            ", userName='" + getUserName() + "'" +
+            ", email='" + getEmail() + "'" +
             "}";
     }
 }

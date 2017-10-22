@@ -52,9 +52,8 @@
 
         <div class="form-group">
             <label for="field_professor">Professor</label>
-            <select class="form-control" id="field_professor" name="professor" ng-model="vm.course.professorId" ng-options="professor.id as professor.id for professor in vm.professors"            >
-                <option value=""></option>
-            </select>
+            <input type="text" class="form-control" id="field_professor" name="professor"
+                   ng-model="vm.course.professorId" readonly value="{{vm.professor.id}}" aria-label="{{vm.professor.firstName}}"/>
         </div>
     </div>
     <div class="modal-footer">
