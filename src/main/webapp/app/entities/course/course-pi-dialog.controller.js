@@ -42,7 +42,6 @@
             if (vm.course.id !== null) {
                 Course.update(vm.course, onSaveSuccess, onSaveError);
             } else {
-                debugger;
                 Course.save(vm.course, onSaveSuccess, onSaveError);
             }
         }

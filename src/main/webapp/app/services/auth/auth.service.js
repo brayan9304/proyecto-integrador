@@ -93,7 +93,6 @@
 
             return Register.save(account,
                 function () {
-                    debugger;
                     return cb(account);
                 },
                 function (err) {
@@ -126,7 +125,6 @@
         }
 
         function createProfessorBasedOnUser(account) {
-            debugger;
             var professors = [];
             Professor.query(function(result) {
                 professors = result;
@@ -140,10 +138,12 @@
                     console.log("dio");
                     var professor = {
                         userName: null,
-                        email: null
+                        email: null,
+                        userId: null
                     };
                     professor.userName = account.login;
                     professor.email = account.email;
+                    professor.userId = account.id;
                     Professor.save(professor);
                 }
             });
