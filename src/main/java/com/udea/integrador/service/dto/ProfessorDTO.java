@@ -20,6 +20,9 @@ public class ProfessorDTO implements Serializable {
     @NotNull
     private String email;
 
+    @NotNull
+    private Long relatedUserId;
+
     public Long getId() {
         return id;
     }
@@ -42,6 +45,14 @@ public class ProfessorDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getRelatedUserId() {
+        return relatedUserId;
+    }
+
+    public void setRelatedUserId(Long relatedUserId) {
+        this.relatedUserId = relatedUserId;
     }
 
     @Override
@@ -71,6 +82,7 @@ public class ProfessorDTO implements Serializable {
             "id=" + getId() +
             ", userName='" + getUserName() + "'" +
             ", email='" + getEmail() + "'" +
+            ", relatedUserId='" + getRelatedUserId() + "'" +
             "}";
     }
 }

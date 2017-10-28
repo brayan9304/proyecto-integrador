@@ -46,6 +46,9 @@ public class ProfessorResourceIntTest {
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_RELATED_USER_ID = 1L;
+    private static final Long UPDATED_RELATED_USER_ID = 2L;
+
     @Autowired
     private ProfessorRepository professorRepository;
 
@@ -90,7 +93,8 @@ public class ProfessorResourceIntTest {
     public static Professor createEntity(EntityManager em) {
         Professor professor = new Professor()
             .userName(DEFAULT_USER_NAME)
-            .email(DEFAULT_EMAIL);
+            .email(DEFAULT_EMAIL)
+            .relatedUserId(DEFAULT_RELATED_USER_ID);
         return professor;
     }
 
@@ -117,6 +121,7 @@ public class ProfessorResourceIntTest {
         Professor testProfessor = professorList.get(professorList.size() - 1);
         assertThat(testProfessor.getUserName()).isEqualTo(DEFAULT_USER_NAME);
         assertThat(testProfessor.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testProfessor.getRelatedUserId()).isEqualTo(DEFAULT_RELATED_USER_ID);
     }
 
     @Test
@@ -179,6 +184,25 @@ public class ProfessorResourceIntTest {
 
     @Test
     @Transactional
+    public void checkRelatedUserIdIsRequired() throws Exception {
+        int databaseSizeBeforeTest = professorRepository.findAll().size();
+        // set the field null
+        professor.setRelatedUserId(null);
+
+        // Create the Professor, which fails.
+        ProfessorDTO professorDTO = professorMapper.toDto(professor);
+
+        restProfessorMockMvc.perform(post("/api/professors")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Professor> professorList = professorRepository.findAll();
+        assertThat(professorList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllProfessors() throws Exception {
         // Initialize the database
         professorRepository.saveAndFlush(professor);
@@ -189,7 +213,8 @@ public class ProfessorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(professor.getId().intValue())))
             .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())));
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
+            .andExpect(jsonPath("$.[*].relatedUserId").value(hasItem(DEFAULT_RELATED_USER_ID.intValue())));
     }
 
     @Test
@@ -204,7 +229,8 @@ public class ProfessorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(professor.getId().intValue()))
             .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME.toString()))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()));
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
+            .andExpect(jsonPath("$.relatedUserId").value(DEFAULT_RELATED_USER_ID.intValue()));
     }
 
     @Test
@@ -226,7 +252,8 @@ public class ProfessorResourceIntTest {
         Professor updatedProfessor = professorRepository.findOne(professor.getId());
         updatedProfessor
             .userName(UPDATED_USER_NAME)
-            .email(UPDATED_EMAIL);
+            .email(UPDATED_EMAIL)
+            .relatedUserId(UPDATED_RELATED_USER_ID);
         ProfessorDTO professorDTO = professorMapper.toDto(updatedProfessor);
 
         restProfessorMockMvc.perform(put("/api/professors")
@@ -240,6 +267,7 @@ public class ProfessorResourceIntTest {
         Professor testProfessor = professorList.get(professorList.size() - 1);
         assertThat(testProfessor.getUserName()).isEqualTo(UPDATED_USER_NAME);
         assertThat(testProfessor.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testProfessor.getRelatedUserId()).isEqualTo(UPDATED_RELATED_USER_ID);
     }
 
     @Test
