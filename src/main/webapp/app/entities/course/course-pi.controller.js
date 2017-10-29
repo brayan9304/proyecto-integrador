@@ -35,11 +35,10 @@
         function loadProfessor() {
             Professor.query(function (result) {
                 result.forEach(function (item) {
-                    if(item.userId = vm.account.id){
+                    if(item.relatedUserId == vm.account.id){
                         vm.courseProfessor = item;
                     }
                 });
-                console.log(vm.courseProfessor);
                 vm.searchQuery = null;
             });
         }
@@ -48,7 +47,7 @@
             Course.query(function (result) {
                 var coursesAux = [];
                 result.forEach(function (item) {
-                    if (vm.courseProfessor.email = vm.account.email) {
+                    if (vm.courseProfessor.email == vm.account.email) {
                         coursesAux.push(item);
                     }
                 });

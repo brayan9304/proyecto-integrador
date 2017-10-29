@@ -51,9 +51,9 @@
         </div>
 
         <div class="form-group">
-            <label for="field_professor">Professor</label>
-            <input type="text" class="form-control" id="field_professor" name="professor"
-                   ng-model="vm.course.professorId" readonly value="{{vm.professor.id}}" aria-label="{{vm.professor.firstName}}"/>
+            <label for="field_professor">Professor: {{vm.professor.userName}}</label>
+            <input type="text" class="form-control hidden" id="field_professor" name="professor"
+                   ng-model="vm.course.professorId" readonly value="{{vm.professor.id}}" aria-label="{{vm.professor.userName}}"/>
         </div>
     </div>
     <div class="modal-footer">
