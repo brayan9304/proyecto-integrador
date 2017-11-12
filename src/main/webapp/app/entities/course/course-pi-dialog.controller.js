@@ -52,6 +52,7 @@
         }
 
         function save() {
+            debugger;
             vm.isSaving = true;
             if (vm.course.id !== null) {
                 Course.update(vm.course, onSaveSuccess, onSaveError);

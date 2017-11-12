@@ -4,7 +4,7 @@
     angular
         .module('proyectoIntegradorApp')
         .constant('VERSION', "0.0.1-SNAPSHOT")
-        .constant('DEBUG_INFO_ENABLED', false)
-        .constant('BUILD_TIMESTAMP', 1509234481076)
+        .constant('DEBUG_INFO_ENABLED', true)
+        .constant('BUILD_TIMESTAMP', "")
 ;
 })();

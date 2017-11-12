@@ -5,7 +5,7 @@
         .module('proyectoIntegradorApp')
         .controller('CoursePiController', CoursePiController);
 
-    CoursePiController.$inject = ['$scope', 'Course','Professor', 'LoginService', 'Principal'];
+    CoursePiController.$inject = ['$scope', 'Course', 'Professor', 'LoginService', 'Principal'];
 
     function CoursePiController($scope, Course, Professor, LoginService, Principal) {
 
@@ -35,7 +35,7 @@
         function loadProfessor() {
             Professor.query(function (result) {
                 result.forEach(function (item) {
-                    if(item.relatedUserId == vm.account.id){
+                    if (item.relatedUserId == vm.account.id) {
                         vm.courseProfessor = item;
                     }
                 });
@@ -47,8 +47,10 @@
             Course.query(function (result) {
                 var coursesAux = [];
                 result.forEach(function (item) {
-                    if (vm.courseProfessor.email == vm.account.email) {
-                        coursesAux.push(item);
+                    if (vm.courseProfessor.email != null) {
+                        if (vm.courseProfessor.email == vm.account.email) {
+                            coursesAux.push(item);
+                        }
                     }
                 });
                 vm.courses = coursesAux;
