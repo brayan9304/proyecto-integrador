@@ -97,6 +97,7 @@
                             return {
                                 userName: null,
                                 email: null,
+                                relatedUserId: null,
                                 id: null
                             };
                         }

@@ -93,7 +93,6 @@
 
             return Register.save(account,
                 function () {
-                    debugger;
                     return cb(account);
                 },
                 function (err) {
@@ -126,25 +125,33 @@
         }
 
         function createProfessorBasedOnUser(account) {
-            debugger;
             var professors = [];
-            Professor.query(function(result) {
+            Professor.query(function (result) {
                 professors = result;
+                var professor = {
+                    userName: null,
+                    email: null,
+                    relatedUserId: null
+                };
+                var professorAux = null;
                 var exists = false;
-                professors.forEach(function (item) {
-                    if(item.userName == account.login){
+                professors.every(function (item) {
+                    if (item.relatedUserId == account.id) {
                         exists = true;
+                        professorAux = item;
+                        professorAux.email = account.email;
+                        professorAux.userName = account.login;
+                        return false;
                     }
                 });
-                if(exists != true){
-                    console.log("dio");
-                    var professor = {
-                        userName: null,
-                        email: null
-                    };
+                if (exists != true) {
                     professor.userName = account.login;
                     professor.email = account.email;
+                    professor.relatedUserId = account.id;
                     Professor.save(professor);
+                }
+                else {
+                    Professor.update(professorAux);
                 }
             });
         }
@@ -183,6 +190,9 @@
 
             return Account.save(account,
                 function () {
+                    Principal.identity(true).then(function (accountAux) {
+                        createProfessorBasedOnUser(accountAux);
+                    });
                     return cb(account);
                 },
                 function (err) {

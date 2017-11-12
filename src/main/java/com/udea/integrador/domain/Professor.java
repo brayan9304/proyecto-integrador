@@ -30,6 +30,10 @@ public class Professor implements Serializable {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @NotNull
+    @Column(name = "related_user_id", nullable = false)
+    private Long relatedUserId;
+
     @OneToMany(mappedBy = "professor")
     @JsonIgnore
     private Set<Course> courses = new HashSet<>();
@@ -67,6 +71,19 @@ public class Professor implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getRelatedUserId() {
+        return relatedUserId;
+    }
+
+    public Professor relatedUserId(Long relatedUserId) {
+        this.relatedUserId = relatedUserId;
+        return this;
+    }
+
+    public void setRelatedUserId(Long relatedUserId) {
+        this.relatedUserId = relatedUserId;
     }
 
     public Set<Course> getCourses() {
@@ -121,6 +138,7 @@ public class Professor implements Serializable {
             "id=" + getId() +
             ", userName='" + getUserName() + "'" +
             ", email='" + getEmail() + "'" +
+            ", relatedUserId='" + getRelatedUserId() + "'" +
             "}";
     }
 }
