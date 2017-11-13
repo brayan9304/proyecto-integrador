@@ -5,9 +5,9 @@
         .module('proyectoIntegradorApp')
         .controller('CoursePiDialogController', CoursePiDialogController);
 
-    CoursePiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Course', 'Session', 'Principal', 'Professor'];
+    CoursePiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Course', 'Session', 'Principal', 'CustomProfessor'];
 
-    function CoursePiDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, Course, Session, Principal, Professor) {
+    function CoursePiDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, Course, Session, Principal, CustomProfessor) {
         var vm = this;
 
         vm.course = entity;
@@ -26,20 +26,14 @@
         function getAccount() {
             Principal.identity().then(function (account) {
                 vm.account = account;
-                loadProfessor(account);
+                loadProfessor(account.id);
             });
         }
 
-        function loadProfessor() {
-            Professor.query(function (result) {
-                result.every(function (item) {
-                    if (item.relatedUserId == vm.account.id) {
-                        vm.professor = item;
-                        vm.course.professorId = vm.professor.id;
-                        return false;
-                    }
-                });
-                vm.searchQuery = null;
+        function loadProfessor(id) {
+            CustomProfessor.get({id: id}, function (result) {
+                vm.professor = result;
+                vm.course.professorId = vm.professor.id;
             });
         }
 
@@ -52,7 +46,6 @@
         }
 
         function save() {
-            debugger;
             vm.isSaving = true;
             if (vm.course.id !== null) {
                 Course.update(vm.course, onSaveSuccess, onSaveError);

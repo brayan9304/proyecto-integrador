@@ -5,9 +5,9 @@
         .module('proyectoIntegradorApp')
         .factory('Auth', Auth);
 
-    Auth.$inject = ['$rootScope', '$state', '$sessionStorage', '$q', 'Principal', 'AuthServerProvider', 'Account', 'LoginService', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'Professor'];
+    Auth.$inject = ['$rootScope', '$state', '$sessionStorage', '$q', 'Principal', 'AuthServerProvider', 'Account', 'LoginService', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'CustomProfessor', 'Professor'];
 
-    function Auth($rootScope, $state, $sessionStorage, $q, Principal, AuthServerProvider, Account, LoginService, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, Professor) {
+    function Auth($rootScope, $state, $sessionStorage, $q, Principal, AuthServerProvider, Account, LoginService, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, CustomProfessor, Professor) {
         var service = {
             activateAccount: activateAccount,
             authorize: authorize,
@@ -125,33 +125,23 @@
         }
 
         function createProfessorBasedOnUser(account) {
-            var professors = [];
-            Professor.query(function (result) {
-                professors = result;
-                var professor = {
-                    userName: null,
-                    email: null,
-                    relatedUserId: null
-                };
-                var professorAux = null;
-                var exists = false;
-                professors.every(function (item) {
-                    if (item.relatedUserId == account.id) {
-                        exists = true;
-                        professorAux = item;
-                        professorAux.email = account.email;
-                        professorAux.userName = account.login;
-                        return false;
-                    }
-                });
-                if (exists != true) {
+            var professor = {
+                userName: null,
+                email: null,
+                relatedUserId: null
+            };
+            CustomProfessor.get({id: account.id}, function (result) {
+                if (result != null) {
+                    result.relatedUserId = account.id;
+                    result.email = account.email;
+                    result.userName = account.login;
+                    Professor.update(result);
+                }
+                else {
                     professor.userName = account.login;
                     professor.email = account.email;
                     professor.relatedUserId = account.id;
                     Professor.save(professor);
-                }
-                else {
-                    Professor.update(professorAux);
                 }
             });
         }
@@ -163,6 +153,7 @@
         function logout() {
             AuthServerProvider.logout();
             Principal.authenticate(null);
+            resetCalendar();
         }
 
         function resetPasswordFinish(keyAndPassword, callback) {
@@ -212,6 +203,30 @@
         function storePreviousState(previousStateName, previousStateParams) {
             var previousState = {"name": previousStateName, "params": previousStateParams};
             $sessionStorage.previousState = previousState;
+        }
+
+        function resetCalendar(){
+            var settings = {
+                Color: '',
+                LinkColor: '',
+                NavShow: true,
+                NavVertical: false,
+                NavLocation: '',
+                DateTimeShow: true,
+                DateTimeFormat: 'mmm, yyyy',
+                DatetimeLocation: '',
+                EventClick: '',
+                EventTargetWholeDay: false
+            };
+            var events = [];
+            var calendarParent = document.getElementById('calendar');
+
+            var element = calendarParent.children;
+            if (element.length > 0) {
+                calendarParent.removeChild(element[0]);
+            }
+
+            caleandar(calendarParent, events, settings);
         }
     }
 })();

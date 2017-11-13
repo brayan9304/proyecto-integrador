@@ -5,12 +5,11 @@
         .module('proyectoIntegradorApp')
         .controller('CoursePiController', CoursePiController);
 
-    CoursePiController.$inject = ['$scope', 'Course', 'Professor', 'LoginService', 'Principal'];
+    CoursePiController.$inject = ['$scope', 'Course', 'CustomCourse', 'Professor', 'LoginService', 'Principal'];
 
-    function CoursePiController($scope, Course, Professor, LoginService, Principal) {
+    function CoursePiController($scope, Course,CustomCourse, Professor, LoginService, Principal) {
 
         var vm = this;
-
         vm.courses = [];
         vm.account = null;
         vm.isAuthenticated = null;
@@ -26,11 +25,11 @@
             Principal.identity().then(function (account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
+                loadAll(account.id);
             });
         }
 
         loadProfessor();
-        loadAll();
 
         function loadProfessor() {
             Professor.query(function (result) {
@@ -43,18 +42,9 @@
             });
         }
 
-        function loadAll() {
-            Course.query(function (result) {
-                var coursesAux = [];
-                result.forEach(function (item) {
-                    if (vm.courseProfessor.email != null) {
-                        if (vm.courseProfessor.email == vm.account.email) {
-                            coursesAux.push(item);
-                        }
-                    }
-                });
-                vm.courses = coursesAux;
-                vm.searchQuery = null;
+        function loadAll(id) {
+            CustomCourse.query({id: id}, function (result) {
+                vm.courses = result;
             });
         }
     }
