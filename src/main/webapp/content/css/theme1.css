@@ -71,8 +71,6 @@
     height: 30px;
     width: 30px;
     border-radius: 50px;
-    background: #337ab7;
-    color: #fff;
 }
 
 .cld-day.disableDay {
@@ -124,13 +122,14 @@
     display: inline-block;
     height: 30px;
     width: 30px;
+    background: #337ab7;
     border-radius: 50px;
     border: 1px solid #999;
+    color: #fff;
 }
 
 .cld-number.eventday:hover {
     cursor: pointer;
-    background: #eee;
 }
 
 .today .cld-number.eventday:hover {

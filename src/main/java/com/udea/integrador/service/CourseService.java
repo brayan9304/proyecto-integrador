@@ -1,6 +1,7 @@
 package com.udea.integrador.service;
 
 import com.udea.integrador.service.dto.CourseDTO;
+
 import java.util.List;
 
 /**
@@ -17,24 +18,24 @@ public interface CourseService {
     CourseDTO save(CourseDTO courseDTO);
 
     /**
-     *  Get all the courses.
+     * Get all the courses.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     List<CourseDTO> findAll();
 
     /**
-     *  Get the "id" course.
+     * Get the "id" course.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     CourseDTO findOne(Long id);
 
     /**
-     *  Delete the "id" course.
+     * Delete the "id" course.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     void delete(Long id);
 }

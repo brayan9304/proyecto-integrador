@@ -5,15 +5,16 @@
         .module('proyectoIntegradorApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'Session'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'Session', 'CustomSession'];
 
-    function HomeController($scope, Principal, LoginService, $state, Session) {
+    function HomeController($scope, Principal, LoginService, $state, Session, CustomSession) {
         var vm = this;
 
         vm.account = null;
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
         vm.sessions = [];
+        vm.events = [];
 
 
         vm.register = register;
@@ -21,17 +22,7 @@
             getAccount();
         });
 
-        loadAllSessions();
         getAccount();
-
-
-        function loadAllSessions() {
-            Session.query(function (result) {
-
-                vm.sessions = result;
-                vm.searchQuery = null;
-            });
-        }
 
         function getAccount() {
             Principal.identity().then(function (account) {
@@ -49,24 +40,7 @@
             $state.go('register');
         }
 
-        function loadUserEvents() {
-            var events = [
-                {'Date': new Date(2017, 10, 13), 'Title 1': 'Doctor appointment at 3:25pm.'},
-                {
-                    'Date': new Date(2017, 10, 14),
-                    'Title 2': 'New Garfield movie comes out!',
-                    'Link': 'https://garfield.com'
-                },
-                {
-                    'Date': new Date(2017, 10, 15),
-                    'Title 3': '25 year anniversary',
-                    'Link': 'https://www.google.com.au/#q=anniversary+gifts'
-                }
-            ];
-            return events;
-        }
-
-        function initCalendar(isLogged) {
+        function printCalendar(events) {
             var settings = {
                 Color: '',
                 LinkColor: '',
@@ -79,10 +53,6 @@
                 EventClick: '',
                 EventTargetWholeDay: false
             };
-            var events = [];
-            if (isLogged) {
-                events = loadUserEvents();
-            }
 
             var calendarParent = document.getElementById('calendar');
 
@@ -90,8 +60,26 @@
             if (element.length > 0) {
                 calendarParent.removeChild(element[0]);
             }
-
             caleandar(calendarParent, events, settings);
+        }
+
+        function initCalendar(isLogged) {
+            var events = [];
+            if (isLogged) {
+                CustomSession.query({id: vm.account.id}, function (result) {
+                    vm.sessions = result;
+                    for (var i = 0; i < result.length; i++) {
+                        events.push({
+                            'Date': new Date(result[i].date.split('-')[0], Number(result[i].date.split('-')[1]) - 1, result[i].date.split('-')[2].substr(0, 2)),
+                            'Title': result[i].name
+                        });
+                    }
+                    printCalendar(events);
+                });
+            } else {
+                printCalendar(events);
+            }
+
         }
     }
 })();
