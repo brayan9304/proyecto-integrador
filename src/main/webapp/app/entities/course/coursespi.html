@@ -1,8 +1,14 @@
 <div>
     <h2>Courses</h2>
+    <div class="search-box-wp">
+        <div class="form-group">
+            <label for="filter_text">Filter:</label>
+            <input type="text" class="form-control input-sm" id="filter_text" ng-model="courseText">
+        </div>
+    </div>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="card pi-card" ng-repeat="course in vm.courses track by course.id">
+    <div class="card pi-card" ng-repeat="course in vm.courses | filter: courseText">
         <div class="card-block">
             <div class="pi-course-icon-wp">
                 <span class="glyphicon glyphicon-list-alt pi-course-icon"></span>

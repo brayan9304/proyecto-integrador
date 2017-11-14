@@ -1,12 +1,49 @@
 <div>
     <h2>Sessions</h2>
+    <div class="search-box-wp">
+        <div class="form-group">
+            <label for="filter_text">Filter:</label>
+            <input type="text" class="form-control input-sm" id="filter_text" ng-model="sessionText">
+        </div>
+    </div>
     <jhi-alert></jhi-alert>
+    <div class="card pi-card" ng-repeat="session in vm.sessions | filter: sessionText">
+        <div class="card-block">
+            <div class="pi-course-icon-wp">
+                <span class="glyphicon glyphicon-list-alt pi-course-icon"></span>
+            </div>
+            <div class="pi-card-content">
+                <h4 class="card-title">Name: {{session.name}}</h4>
+                <p class="card-text"><b>Description:</b> {{session.description}}</p>
+                <p class="card-text"><b>Date:</b> {{session.date | date:'medium'}}</p>
+                <p class="card-text"><b>Semester:</b> {{session.semester}}</p>
+                <button type="submit"
+                        ui-sref="session-pi-detail({id:session.id})"
+                        class="pi-action-button">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                    <span class="hidden-sm-down"></span>
+                </button>
+                <button type="submit"
+                        ui-sref="session-pi.edit({id:session.id})"
+                        class="pi-action-button">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="hidden-sm-down"></span>
+                </button>
+                <button type="submit"
+                        ui-sref="session-pi.delete({id:session.id})"
+                        class="pi-action-button">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    <span class="hidden-sm-down"></span>
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="session-pi.new" >
+                <button class="btn btn-primary" ui-sref="session-pi.new">
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span >
+                    <span>
                         Create new Session
                     </span>
                 </button>
@@ -14,53 +51,4 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
-                <tr>
-                    <th><span>ID</span></th>
-                    <th><span>Name</span></th>
-                    <th><span>Description</span></th>
-                    <th><span>Semester</span></th>
-                    <th><span>Date</span></th>
-                    <th><span>Course</span></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="session in vm.sessions track by session.id">
-                    <td><a ui-sref="session-pi-detail({id:session.id})">{{session.id}}</a></td>
-                    <td>{{session.name}}</td>
-                    <td>{{session.description}}</td>
-                    <td>{{session.semester}}</td>
-                    <td>{{session.date | date:'medium'}}</td>
-                    <td>
-                        <a ui-sref="course-pi-detail({id:session.courseId})">{{session.courseId}}</a>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
-                                    ui-sref="session-pi-detail({id:session.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-sm-down"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="session-pi.edit({id:session.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-sm-down"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="session-pi.delete({id:session.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-sm-down"></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </div>

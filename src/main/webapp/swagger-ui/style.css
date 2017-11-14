@@ -1,20 +1,23 @@
 /*
 Navbar
  */
-nav span{
+nav span {
     color: #ffffff !important;
 }
+
 .dropdown-menu span {
     color: #333 !important;
 }
-.navbar-default .navbar-nav > .active > a,.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-    background-color: #286090!important;
-}
-.navbar-default {
-    background-color: #337ab7!important;
+
+.navbar-default .navbar-nav > .active > a, .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background-color: #286090 !important;
 }
 
-.pi-action-button{
+.navbar-default {
+    background-color: #337ab7 !important;
+}
+
+.pi-action-button {
     background-color: transparent;
     color: black;
     border: none;
@@ -47,10 +50,24 @@ nav span{
     width: calc(100% - 120px);
 }
 
-.pi-card-content, .pi-course-icon-wp{
+.pi-card-content, .pi-course-icon-wp {
     display: inline-block;
 }
 
-dt,dd {
+dt, dd {
     display: inline-block;
+}
+
+.search-box-wp {
+    text-align: right;
+    margin-bottom: 30px;
+}
+
+.search-box-wp .form-group {
+    display: inline-block;
+    text-align: left;
+}
+
+.search-box-wp input {
+    width: 250px;
 }

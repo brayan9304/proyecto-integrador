@@ -5,21 +5,31 @@
         .module('proyectoIntegradorApp')
         .controller('SessionPiDialogController', SessionPiDialogController);
 
-    SessionPiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Session', 'Course'];
+    SessionPiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Session', 'Course', 'CustomCourse', 'Principal'];
 
-    function SessionPiDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Session, Course) {
+    function SessionPiDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Session, Course, CustomCourse, Principal) {
         var vm = this;
 
+        vm.account = null;
         vm.session = entity;
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.courses = Course.query();
+        vm.courses = [];
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
+
+        getAccount();
+
+        function getAccount() {
+            Principal.identity().then(function (account) {
+                vm.account = account;
+                loadAllCourses(account.id);
+            });
+        }
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
@@ -48,6 +58,12 @@
 
         function openCalendar (date) {
             vm.datePickerOpenStatus[date] = true;
+        }
+
+        function loadAllCourses(id) {
+            CustomCourse.query({id: id}, function (result) {
+                vm.courses = result;
+            });
         }
     }
 })();
