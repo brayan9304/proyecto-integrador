@@ -102,26 +102,6 @@ public class ProfessorResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(professorDTO));
     }
 
-
-    /**
-     * GET  /professors/:id : get the "id" professor.
-     *
-     * @param id the id of the professorDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the professorDTO, or with status 404 (Not Found)
-     */
-    @GetMapping("/custom-professors/{id}")
-    @Timed
-    public ResponseEntity<ProfessorDTO> getCustomProfessor(@PathVariable Long id) {
-        log.debug("REST request to get Professor : {}", id);
-        List<ProfessorDTO> professors = professorService.findAll();
-        for(ProfessorDTO professor : professors){
-            if(professor.getRelatedUserId() == id){
-                return ResponseUtil.wrapOrNotFound(Optional.ofNullable(professor));
-            }
-        }
-        return null;
-    }
-
     /**
      * DELETE  /professors/:id : delete the "id" professor.
      *

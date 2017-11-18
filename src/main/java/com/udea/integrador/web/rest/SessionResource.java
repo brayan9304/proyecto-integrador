@@ -2,12 +2,8 @@ package com.udea.integrador.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.udea.integrador.service.SessionService;
-import com.udea.integrador.service.CourseService;
-import com.udea.integrador.service.ProfessorService;
 import com.udea.integrador.web.rest.util.HeaderUtil;
 import com.udea.integrador.service.dto.SessionDTO;
-import com.udea.integrador.service.dto.CourseDTO;
-import com.udea.integrador.service.dto.ProfessorDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +14,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,14 +29,9 @@ public class SessionResource {
     private static final String ENTITY_NAME = "session";
 
     private final SessionService sessionService;
-    private final CourseService courseService;
-    private final ProfessorService professorService;
 
-    public SessionResource(SessionService sessionService, CourseService courseService, ProfessorService professorService) {
+    public SessionResource(SessionService sessionService) {
         this.sessionService = sessionService;
-        this.courseService = courseService;
-        this.professorService = professorService;
-
     }
 
     /**
@@ -96,41 +86,7 @@ public class SessionResource {
     public List<SessionDTO> getAllSessions() {
         log.debug("REST request to get all Sessions");
         return sessionService.findAll();
-    }
-
-
-    /**
-     * GET  /sessions : get all the sessions.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of sessions in body
-     */
-    @GetMapping("/custom-sessions/{id}")
-    @Timed
-    public List<SessionDTO> getAllCustomSessions(@PathVariable Long id) {
-        log.debug("REST request to get all Sessions");
-        List<CourseDTO> courses = courseService.findAll();
-        List<CourseDTO> customCourses = new ArrayList<>();
-        ProfessorDTO professor = null;
-        for (CourseDTO course : courses) {
-            professor = professorService.findOne(course.getProfessorId());
-            if (professor.getRelatedUserId() == id) {
-                customCourses.add(course);
-            }
         }
-
-        List<SessionDTO> sessionList = sessionService.findAll();
-        List<SessionDTO> customSessionList = new ArrayList<>();
-
-
-        CourseDTO sessionCourse = null;
-        for (SessionDTO session : sessionList) {
-            sessionCourse = courseService.findOne(session.getCourseId());
-            if (customCourses.contains(sessionCourse)) {
-                customSessionList.add(session);
-            }
-        }
-        return customSessionList;
-    }
 
     /**
      * GET  /sessions/:id : get the "id" session.

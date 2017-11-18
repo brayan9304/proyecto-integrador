@@ -1,53 +1,64 @@
 <div>
     <h2>Courses</h2>
-    <div class="search-box-wp">
-        <div class="form-group">
-            <label for="filter_text">Filter:</label>
-            <input type="text" class="form-control input-sm" id="filter_text" ng-model="courseText">
-        </div>
-    </div>
     <jhi-alert></jhi-alert>
-    <br/>
-    <div class="card pi-card" ng-repeat="course in vm.courses | filter: courseText">
-        <div class="card-block">
-            <div class="pi-course-icon-wp">
-                <span class="glyphicon glyphicon-list-alt pi-course-icon"></span>
-            </div>
-            <div class="pi-card-content">
-                <h4 class="card-title">Title: {{course.name}}</h4>
-                <p class="card-text"><b>Subject:</b> {{course.subject}}</p>
-                <p class="card-text"><b>Description:</b> {{course.description}}</p>
-                <button type="submit"
-                        ui-sref="course-pi-detail({id:course.id})"
-                        class="pi-action-button">
-                    <span class="glyphicon glyphicon-eye-open"></span>
-                    <span class="hidden-sm-down"></span>
-                </button>
-                <button type="submit"
-                        ui-sref="course-pi.edit({id:course.id})"
-                        class="pi-action-button">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                    <span class="hidden-sm-down"></span>
-                </button>
-                <button type="submit"
-                        ui-sref="course-pi.delete({id:course.id})"
-                        class="pi-action-button">
-                    <span class="glyphicon glyphicon-trash"></span>
-                    <span class="hidden-sm-down"></span>
-                </button>
-            </div>
-        </div>
-    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="course-pi.new">
+                <button class="btn btn-primary" ui-sref="course-pi.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span>
+                    <span >
                         Create new Course
                     </span>
                 </button>
             </div>
         </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Name</span></th>
+                    <th><span>Subject</span></th>
+                    <th><span>Description</span></th>
+                    <th><span>Professor</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="course in vm.courses track by course.id">
+                    <td><a ui-sref="course-pi-detail({id:course.id})">{{course.id}}</a></td>
+                    <td>{{course.name}}</td>
+                    <td>{{course.subject}}</td>
+                    <td>{{course.description}}</td>
+                    <td>
+                        <a ui-sref="professor-pi-detail({id:course.professorId})">{{course.professorId}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="course-pi-detail({id:course.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="course-pi.edit({id:course.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="course-pi.delete({id:course.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

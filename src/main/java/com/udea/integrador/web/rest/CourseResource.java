@@ -2,10 +2,8 @@ package com.udea.integrador.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.udea.integrador.service.CourseService;
-import com.udea.integrador.service.ProfessorService;
 import com.udea.integrador.web.rest.util.HeaderUtil;
 import com.udea.integrador.service.dto.CourseDTO;
-import com.udea.integrador.service.dto.ProfessorDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +14,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,11 +30,8 @@ public class CourseResource {
 
     private final CourseService courseService;
 
-    private final ProfessorService professorService;
-
-    public CourseResource(CourseService courseService, ProfessorService professorService) {
+    public CourseResource(CourseService courseService) {
         this.courseService = courseService;
-        this.professorService = professorService;
     }
 
     /**
@@ -92,29 +86,7 @@ public class CourseResource {
     public List<CourseDTO> getAllCourses() {
         log.debug("REST request to get all Courses");
         return courseService.findAll();
-    }
-
-
-    /**
-     * GET  /courses : get all the courses.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of courses in body
-     */
-    @GetMapping("/custom-courses/{id}")
-    @Timed
-    public List<CourseDTO> getAllCustomCourses(@PathVariable Long id) {
-        log.debug("REST request to get all Courses");
-        List<CourseDTO> coursesList = courseService.findAll();
-        List<CourseDTO> customCoursesList = new ArrayList<>();
-        for (CourseDTO course : coursesList) {
-            ProfessorDTO professor = professorService.findOne(course.getProfessorId());
-            if (professor.getRelatedUserId() == id) {
-                log.debug("-------------------\n ----- p id: " + professor.getRelatedUserId());
-                customCoursesList.add(course);
-            }
         }
-        return customCoursesList;
-    }
 
     /**
      * GET  /courses/:id : get the "id" course.

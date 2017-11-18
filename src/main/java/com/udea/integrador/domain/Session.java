@@ -1,10 +1,13 @@
 package com.udea.integrador.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -38,6 +41,10 @@ public class Session implements Serializable {
 
     @ManyToOne
     private Course course;
+
+    @OneToMany(mappedBy = "session")
+    @JsonIgnore
+    private Set<SessionMaterial> idSessions = new HashSet<>();
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
@@ -111,6 +118,31 @@ public class Session implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Set<SessionMaterial> getIdSessions() {
+        return idSessions;
+    }
+
+    public Session idSessions(Set<SessionMaterial> sessionMaterials) {
+        this.idSessions = sessionMaterials;
+        return this;
+    }
+
+    public Session addIdSession(SessionMaterial sessionMaterial) {
+        this.idSessions.add(sessionMaterial);
+        sessionMaterial.setSession(this);
+        return this;
+    }
+
+    public Session removeIdSession(SessionMaterial sessionMaterial) {
+        this.idSessions.remove(sessionMaterial);
+        sessionMaterial.setSession(null);
+        return this;
+    }
+
+    public void setIdSessions(Set<SessionMaterial> sessionMaterials) {
+        this.idSessions = sessionMaterials;
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 
