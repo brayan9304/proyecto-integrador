@@ -11,8 +11,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface MaterialMapper extends EntityMapper <MaterialDTO, Material> {
     
-    @Mapping(target = "idMaterials", ignore = true)
-    Material toEntity(MaterialDTO materialDTO); 
+    
     default Material fromId(Long id) {
         if (id == null) {
             return null;

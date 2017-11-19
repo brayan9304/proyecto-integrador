@@ -5,9 +5,9 @@
         .module('proyectoIntegradorApp')
         .controller('SessionPiDetailController', SessionPiDetailController);
 
-    SessionPiDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Session', 'Course', 'SessionMaterial'];
+    SessionPiDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Session', 'Course'];
 
-    function SessionPiDetailController($scope, $rootScope, $stateParams, previousState, entity, Session, Course, SessionMaterial) {
+    function SessionPiDetailController($scope, $rootScope, $stateParams, previousState, entity, Session, Course) {
         var vm = this;
 
         vm.session = entity;

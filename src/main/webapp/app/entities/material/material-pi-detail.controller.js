@@ -5,9 +5,9 @@
         .module('proyectoIntegradorApp')
         .controller('MaterialPiDetailController', MaterialPiDetailController);
 
-    MaterialPiDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Material', 'SessionMaterial'];
+    MaterialPiDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Material'];
 
-    function MaterialPiDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Material, SessionMaterial) {
+    function MaterialPiDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Material) {
         var vm = this;
 
         vm.material = entity;

@@ -55,7 +55,7 @@ public class SessionServiceImpl implements SessionService{
     @Transactional(readOnly = true)
     public List<SessionDTO> findAll() {
         log.debug("Request to get all Sessions");
-        return sessionRepository.findAll().stream()
+        return sessionRepository.findAllWithEagerRelationships().stream()
             .map(sessionMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
@@ -70,7 +70,7 @@ public class SessionServiceImpl implements SessionService{
     @Transactional(readOnly = true)
     public SessionDTO findOne(Long id) {
         log.debug("Request to get Session : {}", id);
-        Session session = sessionRepository.findOne(id);
+        Session session = sessionRepository.findOneWithEagerRelationships(id);
         return sessionMapper.toDto(session);
     }
 

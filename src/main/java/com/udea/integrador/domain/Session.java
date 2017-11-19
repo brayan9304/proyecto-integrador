@@ -1,6 +1,5 @@
 package com.udea.integrador.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -42,9 +41,11 @@ public class Session implements Serializable {
     @ManyToOne
     private Course course;
 
-    @OneToMany(mappedBy = "session")
-    @JsonIgnore
-    private Set<SessionMaterial> idSessions = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "session_material",
+               joinColumns = @JoinColumn(name="sessions_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="materials_id", referencedColumnName="id"))
+    private Set<Material> materials = new HashSet<>();
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
@@ -120,29 +121,27 @@ public class Session implements Serializable {
         this.course = course;
     }
 
-    public Set<SessionMaterial> getIdSessions() {
-        return idSessions;
+    public Set<Material> getMaterials() {
+        return materials;
     }
 
-    public Session idSessions(Set<SessionMaterial> sessionMaterials) {
-        this.idSessions = sessionMaterials;
+    public Session materials(Set<Material> materials) {
+        this.materials = materials;
         return this;
     }
 
-    public Session addIdSession(SessionMaterial sessionMaterial) {
-        this.idSessions.add(sessionMaterial);
-        sessionMaterial.setSession(this);
+    public Session addMaterial(Material material) {
+        this.materials.add(material);
         return this;
     }
 
-    public Session removeIdSession(SessionMaterial sessionMaterial) {
-        this.idSessions.remove(sessionMaterial);
-        sessionMaterial.setSession(null);
+    public Session removeMaterial(Material material) {
+        this.materials.remove(material);
         return this;
     }
 
-    public void setIdSessions(Set<SessionMaterial> sessionMaterials) {
-        this.idSessions = sessionMaterials;
+    public void setMaterials(Set<Material> materials) {
+        this.materials = materials;
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 

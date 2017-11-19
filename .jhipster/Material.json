@@ -1,13 +1,6 @@
 {
     "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "idMaterial",
-            "otherEntityName": "sessionMaterial",
-            "otherEntityRelationshipName": "material"
-        }
-    ],
+    "relationships": [],
     "fields": [
         {
             "fieldName": "name",

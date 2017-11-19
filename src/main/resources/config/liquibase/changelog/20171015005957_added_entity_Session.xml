@@ -46,6 +46,17 @@
         </createTable>
         <dropDefaultValue tableName="session" columnName="jhi_date" columnDataType="datetime"/>
         
+        <createTable tableName="session_material">
+            <column name="materials_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sessions_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="sessions_id, materials_id" tableName="session_material"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

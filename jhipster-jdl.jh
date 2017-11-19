@@ -26,11 +26,6 @@ entity Material {
     materialFile AnyBlob required
 }
 
-entity SessionMaterial {
-    idSession Long required,
-    idMaterial Long required
-}
-
 relationship OneToMany {
 	Course{session} to Session
 }
@@ -39,13 +34,10 @@ relationship OneToMany {
 	Professor{course} to Course
 }
 
-relationship OneToMany {
-	Session{idSession} to SessionMaterial
+relationship ManyToMany {
+	Session{Material(id)} to Material
 }
 
-relationship OneToMany {
-	Material{idMaterial} to SessionMaterial
-}
 
 dto * with mapstruct
 

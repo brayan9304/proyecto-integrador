@@ -1,12 +1,9 @@
 package com.udea.integrador.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -33,10 +30,6 @@ public class Material implements Serializable {
 
     @Column(name = "material_file_content_type", nullable = false)
     private String materialFileContentType;
-
-    @OneToMany(mappedBy = "material")
-    @JsonIgnore
-    private Set<SessionMaterial> idMaterials = new HashSet<>();
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
@@ -84,31 +77,6 @@ public class Material implements Serializable {
 
     public void setMaterialFileContentType(String materialFileContentType) {
         this.materialFileContentType = materialFileContentType;
-    }
-
-    public Set<SessionMaterial> getIdMaterials() {
-        return idMaterials;
-    }
-
-    public Material idMaterials(Set<SessionMaterial> sessionMaterials) {
-        this.idMaterials = sessionMaterials;
-        return this;
-    }
-
-    public Material addIdMaterial(SessionMaterial sessionMaterial) {
-        this.idMaterials.add(sessionMaterial);
-        sessionMaterial.setMaterial(this);
-        return this;
-    }
-
-    public Material removeIdMaterial(SessionMaterial sessionMaterial) {
-        this.idMaterials.remove(sessionMaterial);
-        sessionMaterial.setMaterial(null);
-        return this;
-    }
-
-    public void setIdMaterials(Set<SessionMaterial> sessionMaterials) {
-        this.idMaterials = sessionMaterials;
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 

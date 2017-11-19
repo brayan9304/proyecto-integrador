@@ -3,8 +3,6 @@ package com.udea.integrador.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 import javax.persistence.Lob;
 

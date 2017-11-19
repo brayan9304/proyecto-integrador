@@ -1,5 +1,3 @@
-session-pi-detail.html
-
 <div>
     <h2>{{vm.session.name}}</h2>
     <hr>
@@ -37,6 +35,11 @@ session-pi-detail.html
     <button type="button" ui-sref="session-pi-detail.edit({idSession:vm.session.id})" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-sm-down"> Edit</span>
+    </button>
+
+    <button type="button" ui-sref="sessions-pi.addMaterial({idSession:vm.session.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Add Material</span>
     </button>
 </div>
 

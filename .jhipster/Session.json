@@ -8,10 +8,12 @@
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "idSession",
-            "otherEntityName": "sessionMaterial",
-            "otherEntityRelationshipName": "session"
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "material",
+            "otherEntityName": "material",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "fields": [

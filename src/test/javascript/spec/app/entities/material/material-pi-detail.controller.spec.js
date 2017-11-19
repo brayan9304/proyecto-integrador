@@ -4,7 +4,7 @@ describe('Controller Tests', function() {
 
     describe('Material Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockPreviousState, MockMaterial, MockSessionMaterial;
+        var MockEntity, MockPreviousState, MockMaterial;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -13,7 +13,6 @@ describe('Controller Tests', function() {
             MockEntity = jasmine.createSpy('MockEntity');
             MockPreviousState = jasmine.createSpy('MockPreviousState');
             MockMaterial = jasmine.createSpy('MockMaterial');
-            MockSessionMaterial = jasmine.createSpy('MockSessionMaterial');
             
 
             var locals = {
@@ -21,8 +20,7 @@ describe('Controller Tests', function() {
                 '$rootScope': $rootScope,
                 'entity': MockEntity,
                 'previousState': MockPreviousState,
-                'Material': MockMaterial,
-                'SessionMaterial': MockSessionMaterial
+                'Material': MockMaterial
             };
             createController = function() {
                 $injector.get('$controller')("MaterialPiDetailController", locals);
