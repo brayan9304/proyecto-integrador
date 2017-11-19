@@ -158,13 +158,13 @@ public class SessionResource {
     public List<SessionDTO> getAllCustomSessionsByCourse(@PathVariable Long id) {
         log.debug("REST request to get all Sessions");
         List<SessionDTO> sessionList = sessionService.findAll();
-        List<SessionDTO> customSessionList = sessionList.stream().filter(sessionDTO -> sessionDTO.getCourseId() == id).collect(Collectors.toList());
-        Collections.sort(customSessionList, new Comparator<SessionDTO>() {
+        List<SessionDTO> customSessions = sessionList.stream().filter(sessionDTO -> sessionDTO.getCourseId() == id).collect(Collectors.toList());
+        Collections.sort(customSessions, new Comparator<SessionDTO>() {
             public int compare(SessionDTO s1, SessionDTO s2) {
                 return s2.getDate().compareTo(s1.getDate());
             }
         });
-        return customSessionList;
+        return customSessions;
     }
 
 
