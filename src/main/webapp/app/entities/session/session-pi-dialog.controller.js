@@ -15,7 +15,6 @@
         vm.materials = materialsEntity;
         vm.materialsToUpdate = [];
         vm.materialsToDelete = [];
-        debugger;
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
@@ -53,7 +52,6 @@
 
         function updateMaterials() {
             vm.materialsToUpdate.forEach(function (material) {
-                debugger;
                 if (!materialExists(material)) {
                     vm.session.materials.push(material);
                 }
@@ -67,7 +65,6 @@
                 var counter = 0;
                 var index = null;
                 while (!found) {
-                    debugger;
                     if (vm.session.materials[counter].id == material.id) {
                         found = true;
                         index = counter;
