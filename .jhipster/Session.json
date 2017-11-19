@@ -6,6 +6,12 @@
             "otherEntityName": "course",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "idSession",
+            "otherEntityName": "sessionMaterial",
+            "otherEntityRelationshipName": "session"
         }
     ],
     "fields": [

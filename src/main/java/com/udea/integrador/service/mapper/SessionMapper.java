@@ -15,6 +15,7 @@ public interface SessionMapper extends EntityMapper <SessionDTO, Session> {
     SessionDTO toDto(Session session); 
 
     @Mapping(source = "courseId", target = "course")
+    @Mapping(target = "idSessions", ignore = true)
     Session toEntity(SessionDTO sessionDTO); 
     default Session fromId(Long id) {
         if (id == null) {

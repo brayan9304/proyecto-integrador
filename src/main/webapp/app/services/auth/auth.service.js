@@ -125,6 +125,7 @@
         }
 
         function createProfessorBasedOnUser(account) {
+            debugger;
             var professor = {
                 userName: null,
                 email: null,

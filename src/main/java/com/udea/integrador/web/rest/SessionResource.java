@@ -2,13 +2,14 @@ package com.udea.integrador.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.udea.integrador.service.SessionService;
-import com.udea.integrador.service.CourseService;
-import com.udea.integrador.service.ProfessorService;
+import com.udea.integrador.service.dto.CourseDTO;
 import com.udea.integrador.web.rest.util.HeaderUtil;
 import com.udea.integrador.service.dto.SessionDTO;
-import com.udea.integrador.service.dto.CourseDTO;
-import com.udea.integrador.service.dto.ProfessorDTO;
 import io.github.jhipster.web.util.ResponseUtil;
+import com.udea.integrador.service.CourseService;
+import com.udea.integrador.service.ProfessorService;
+import com.udea.integrador.service.dto.ProfessorDTO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -37,11 +38,11 @@ public class SessionResource {
     private final CourseService courseService;
     private final ProfessorService professorService;
 
+
     public SessionResource(SessionService sessionService, CourseService courseService, ProfessorService professorService) {
         this.sessionService = sessionService;
         this.courseService = courseService;
         this.professorService = professorService;
-
     }
 
     /**
@@ -98,6 +99,20 @@ public class SessionResource {
         return sessionService.findAll();
     }
 
+    /**
+     * GET  /sessions/:id : get the "id" session.
+     *
+     * @param id the id of the sessionDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the sessionDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/sessions/{id}")
+    @Timed
+    public ResponseEntity<SessionDTO> getSession(@PathVariable Long id) {
+        log.debug("REST request to get Session : {}", id);
+        SessionDTO sessionDTO = sessionService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(sessionDTO));
+    }
+
 
     /**
      * GET  /sessions : get all the sessions.
@@ -122,7 +137,7 @@ public class SessionResource {
         List<SessionDTO> customSessionList = new ArrayList<>();
 
 
-        CourseDTO sessionCourse = null;
+        CourseDTO sessionCourse = new CourseDTO();
         for (SessionDTO session : sessionList) {
             sessionCourse = courseService.findOne(session.getCourseId());
             if (customCourses.contains(sessionCourse)) {
@@ -130,20 +145,6 @@ public class SessionResource {
             }
         }
         return customSessionList;
-    }
-
-    /**
-     * GET  /sessions/:id : get the "id" session.
-     *
-     * @param id the id of the sessionDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the sessionDTO, or with status 404 (Not Found)
-     */
-    @GetMapping("/sessions/{id}")
-    @Timed
-    public ResponseEntity<SessionDTO> getSession(@PathVariable Long id) {
-        log.debug("REST request to get Session : {}", id);
-        SessionDTO sessionDTO = sessionService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(sessionDTO));
     }
 
     /**

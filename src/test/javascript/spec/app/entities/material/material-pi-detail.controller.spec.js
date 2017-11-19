@@ -2,9 +2,9 @@
 
 describe('Controller Tests', function() {
 
-    describe('Session Management Detail Controller', function() {
+    describe('Material Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockPreviousState, MockSession, MockCourse, MockSessionMaterial;
+        var MockEntity, MockPreviousState, MockMaterial, MockSessionMaterial;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -12,8 +12,7 @@ describe('Controller Tests', function() {
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
             MockPreviousState = jasmine.createSpy('MockPreviousState');
-            MockSession = jasmine.createSpy('MockSession');
-            MockCourse = jasmine.createSpy('MockCourse');
+            MockMaterial = jasmine.createSpy('MockMaterial');
             MockSessionMaterial = jasmine.createSpy('MockSessionMaterial');
             
 
@@ -22,19 +21,18 @@ describe('Controller Tests', function() {
                 '$rootScope': $rootScope,
                 'entity': MockEntity,
                 'previousState': MockPreviousState,
-                'Session': MockSession,
-                'Course': MockCourse,
+                'Material': MockMaterial,
                 'SessionMaterial': MockSessionMaterial
             };
             createController = function() {
-                $injector.get('$controller')("SessionPiDetailController", locals);
+                $injector.get('$controller')("MaterialPiDetailController", locals);
             };
         }));
 
 
         describe('Root Scope Listening', function() {
             it('Unregisters root scope listener upon scope destruction', function() {
-                var eventType = 'proyectoIntegradorApp:sessionUpdate';
+                var eventType = 'proyectoIntegradorApp:materialUpdate';
 
                 createController();
                 expect($rootScope.$$listenerCount[eventType]).toEqual(1);
