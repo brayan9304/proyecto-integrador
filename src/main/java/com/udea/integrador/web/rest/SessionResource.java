@@ -153,13 +153,20 @@ public class SessionResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of sessions in body
      */
-    @GetMapping("/material-for-session/{id}")
+    @GetMapping("/sessions-by-courses/{id}")
     @Timed
-    public Set<MaterialDTO> getAllCustomSessionsByCourse(@PathVariable Long id) {
-        log.debug("REST request to get all Materials for session");
-        SessionDTO session = sessionService.findOne(id);
-        return session.getMaterials();
+    public List<SessionDTO> getAllCustomSessionsByCourse(@PathVariable Long id) {
+        log.debug("REST request to get all Sessions");
+        List<SessionDTO> sessionList = sessionService.findAll();
+        List<SessionDTO> customSessionList = sessionList.stream().filter(sessionDTO -> sessionDTO.getCourseId() == id).collect(Collectors.toList());
+        Collections.sort(customSessionList, new Comparator<SessionDTO>() {
+            public int compare(SessionDTO s1, SessionDTO s2) {
+                return s2.getDate().compareTo(s1.getDate());
+            }
+        });
+        return customSessionList;
     }
+
 
     /**
      * DELETE  /sessions/:id : delete the "id" session.

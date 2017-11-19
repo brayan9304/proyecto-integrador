@@ -9,7 +9,6 @@
 
     function CoursePiDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, Course, Session, Principal, CustomProfessor) {
         var vm = this;
-        debugger;
         vm.course = entity;
         vm.clear = clear;
         vm.save = save;

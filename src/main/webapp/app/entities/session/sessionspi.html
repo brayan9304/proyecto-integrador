@@ -50,5 +50,39 @@
             </div>
         </div>
     </div>
-    <br/>
+</div>
+
+
+<div class="pi-card-wp">
+    <div class="blog-card spring-fever" ng-repeat="session in vm.sessions | filter: sessionText">
+        <div class="title-content">
+            <h2>{{session.name}}</h2>
+        </div><!-- /.title-content -->
+        <p class="card-info">
+            {{session.description}}
+        </p><!-- /.card-info -->
+        <div class="utility-info">
+            <ul class="utility-list">
+                <li class="date">{{session.date | date:'medium'}}</li>
+            </ul>
+        </div><!-- /.utility-info -->
+        <button type="submit"
+                ui-sref="session-pi-detail({idSession:session.id})"
+                class="pi-action-button">
+            <span class="glyphicon glyphicon-eye-open"></span>
+            <span class="hidden-sm-down"></span>
+        </button>
+        <button type="submit"
+                ui-sref="sessions-pi.edit({idSession:session.id})"
+                class="pi-action-button">
+            <span class="glyphicon glyphicon-pencil"></span>
+            <span class="hidden-sm-down"></span>
+        </button>
+        <button type="submit"
+                ui-sref="sessions-pi.delete({idSession:session.id})"
+                class="pi-action-button">
+            <span class="glyphicon glyphicon-trash"></span>
+            <span class="hidden-sm-down"></span>
+        </button>
+    </div><!-- /.blog-card -->
 </div>

@@ -38,28 +38,14 @@
     </button>
 
     <button type="button" ui-sref="sessions-pi.addMaterial({idSession:vm.session.id})" class="btn btn-primary">
-        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="glyphicon glyphicon-cloud-upload"></span>
         <span class="hidden-sm-down"> Add Material</span>
     </button>
 </div>
 
 
 <div>
-    <h2>Materials</h2>
-    <jhi-alert></jhi-alert>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="material-pi.new" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span >
-                        Create new Material
-                    </span>
-                </button>
-            </div>
-        </div>
-    </div>
-    <br/>
+
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
@@ -75,7 +61,8 @@
                 <td><a ui-sref="material-pi-detail({id:material.id})">{{material.id}}</a></td>
                 <td>{{material.name}}</td>
                 <td>
-                    <a ng-if="material.materialFile" ng-click="vm.openFile(material.materialFileContentType, material.materialFile)">open</a>
+                    <a ng-if="material.materialFile"
+                       ng-click="vm.openFile(material.materialFileContentType, material.materialFile)">open</a>
                     <span ng-if="material.materialFile">{{material.materialFileContentType}}, {{vm.byteSize(material.materialFile)}}</span>
                 </td>
                 <td class="text-right">

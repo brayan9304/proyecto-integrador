@@ -35,7 +35,6 @@
         }
 
         function UpdateSession(result) {
-            debugger;
             vm.session.materials.push(result);
             Session.update(vm.session);
         }
