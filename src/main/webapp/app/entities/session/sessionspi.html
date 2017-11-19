@@ -18,19 +18,19 @@
                 <p class="card-text"><b>Date:</b> {{session.date | date:'medium'}}</p>
                 <p class="card-text"><b>Semester:</b> {{session.semester}}</p>
                 <button type="submit"
-                        ui-sref="session-pi-detail({id:session.id})"
+                        ui-sref="session-pi-detail({idSession:session.id})"
                         class="pi-action-button">
                     <span class="glyphicon glyphicon-eye-open"></span>
                     <span class="hidden-sm-down"></span>
                 </button>
                 <button type="submit"
-                        ui-sref="session-pi.edit({id:session.id})"
+                        ui-sref="sessions-pi.edit({idSession:session.id})"
                         class="pi-action-button">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <span class="hidden-sm-down"></span>
                 </button>
                 <button type="submit"
-                        ui-sref="session-pi.delete({id:session.id})"
+                        ui-sref="sessions-pi.delete({idSession:session.id})"
                         class="pi-action-button">
                     <span class="glyphicon glyphicon-trash"></span>
                     <span class="hidden-sm-down"></span>
@@ -41,7 +41,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="session-pi.new">
+                <button class="btn btn-primary" ui-sref="sessions-pi.new">
                     <span class="glyphicon glyphicon-plus"></span>
                     <span>
                         Create new Session

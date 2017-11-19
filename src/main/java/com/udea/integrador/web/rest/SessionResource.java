@@ -19,9 +19,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Session.
@@ -144,6 +143,26 @@ public class SessionResource {
                 customSessionList.add(session);
             }
         }
+        return customSessionList;
+    }
+
+
+    /**
+     * GET  /sessions : get all the sessions.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of sessions in body
+     */
+    @GetMapping("/sessions-by-courses/{id}")
+    @Timed
+    public List<SessionDTO> getAllCustomSessionsByCourse(@PathVariable Long id) {
+        log.debug("REST request to get all Sessions");
+        List<SessionDTO> sessionList = sessionService.findAll();
+        List<SessionDTO> customSessionList = sessionList.stream().filter(sessionDTO -> sessionDTO.getCourseId() == id).collect(Collectors.toList());
+        Collections.sort(customSessionList, new Comparator<SessionDTO>() {
+            public int compare(SessionDTO s1, SessionDTO s2) {
+                return s2.getDate().compareTo(s1.getDate());
+            }
+        });
         return customSessionList;
     }
 

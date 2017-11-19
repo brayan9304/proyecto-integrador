@@ -9,9 +9,9 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-        .state('session-pi', {
+        .state('sessions-pi', {
             parent: 'entity',
-            url: '/session-pi',
+            url: '/sessions-pi/{id}',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'Sessions'
@@ -24,11 +24,14 @@
                 }
             },
             resolve: {
+                sessions: ['$stateParams', 'CustomSessionByCourse', function($stateParams, CustomSessionByCourse) {
+                    return CustomSessionByCourse.query({id : $stateParams.id}).$promise;
+                }]
             }
         })
         .state('session-pi-detail', {
-            parent: 'session-pi',
-            url: '/session-pi/{id}',
+            parent: 'sessions-pi',
+            url: '/session-pi/{idSession}',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'Session'
@@ -42,11 +45,11 @@
             },
             resolve: {
                 entity: ['$stateParams', 'Session', function($stateParams, Session) {
-                    return Session.get({id : $stateParams.id}).$promise;
+                    return Session.get({id : $stateParams.idSession}).$promise;
                 }],
                 previousState: ["$state", function ($state) {
                     var currentStateData = {
-                        name: $state.current.name || 'session-pi',
+                        name: $state.current.name || 'sessions-pi',
                         params: $state.params,
                         url: $state.href($state.current.name, $state.params)
                     };
@@ -69,7 +72,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Session', function(Session) {
-                            return Session.get({id : $stateParams.id}).$promise;
+                            return Session.get({id : $stateParams.idSession}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -79,8 +82,8 @@
                 });
             }]
         })
-        .state('session-pi.new', {
-            parent: 'session-pi',
+        .state('sessions-pi.new', {
+            parent: 'sessions-pi',
             url: '/new',
             data: {
                 authorities: ['ROLE_USER']
@@ -104,15 +107,15 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('session-pi', null, { reload: 'session-pi' });
+                    $state.go('sessions-pi', null, { reload: 'sessions-pi' });
                 }, function() {
-                    $state.go('session-pi');
+                    $state.go('sessions-pi');
                 });
             }]
         })
-        .state('session-pi.edit', {
-            parent: 'session-pi',
-            url: '/{id}/edit',
+        .state('sessions-pi.edit', {
+            parent: 'sessions-pi',
+            url: '/edit/{idSession}',
             data: {
                 authorities: ['ROLE_USER']
             },
@@ -125,19 +128,19 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Session', function(Session) {
-                            return Session.get({id : $stateParams.id}).$promise;
+                            return Session.get({id : $stateParams.idSession}).$promise;
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('session-pi', null, { reload: 'session-pi' });
+                    $state.go('sessions-pi', null, { reload: 'sessions-pi' });
                 }, function() {
                     $state.go('^');
                 });
             }]
         })
-        .state('session-pi.delete', {
-            parent: 'session-pi',
-            url: '/{id}/delete',
+        .state('sessions-pi.delete', {
+            parent: 'sessions-pi',
+            url: '/delete{idSession}',
             data: {
                 authorities: ['ROLE_USER']
             },
@@ -149,11 +152,11 @@
                     size: 'md',
                     resolve: {
                         entity: ['Session', function(Session) {
-                            return Session.get({id : $stateParams.id}).$promise;
+                            return Session.get({id : $stateParams.idSession}).$promise;
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('session-pi', null, { reload: 'session-pi' });
+                    $state.go('sessions-pi', null, { reload: 'sessions-pi' });
                 }, function() {
                     $state.go('^');
                 });
