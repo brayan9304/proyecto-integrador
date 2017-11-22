@@ -28,71 +28,55 @@
 
     <button type="submit"
             ui-sref="{{ vm.previousState }}"
-            class="btn btn-info">
+            class="btn btn-info pi-button pi-button-transparent">
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
     </button>
 
-    <button type="button" ui-sref="session-pi-detail.edit({idSession:vm.session.id})" class="btn btn-primary">
+    <button type="button" ui-sref="session-pi-detail.edit({idSession:vm.session.id})" class="btn btn-primary pi-button">
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-sm-down"> Edit</span>
     </button>
 
-    <button type="button" ui-sref="sessions-pi.addMaterial({idSession:vm.session.id})" class="btn btn-primary">
+    <button type="button" ui-sref="sessions-pi.addMaterial({idSession:vm.session.id})" class="btn btn-primary pi-button">
         <span class="glyphicon glyphicon-cloud-upload"></span>
         <span class="hidden-sm-down"> Add Material</span>
     </button>
 </div>
 
-
-<div>
-
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
-            <tr>
-                <th><span>ID</span></th>
-                <th><span>Name</span></th>
-                <th><span>Material File</span></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="material in vm.materials track by material.id">
-                <td><a ui-sref="material-pi-detail({id:material.id})">{{material.id}}</a></td>
-                <td>{{material.name}}</td>
-                <td>
-                    <a ng-if="material.materialFile"
-                       ng-click="vm.openFile(material.materialFileContentType, material.materialFile)">open</a>
-                    <span ng-if="material.materialFile">{{material.materialFileContentType}}, {{vm.byteSize(material.materialFile)}}</span>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                ui-sref="material-pi-detail({id:material.id})"
-                                class="btn btn-info btn-sm">
-                            <span class="glyphicon glyphicon-eye-open"></span>
-                            <span class="hidden-sm-down"></span>
-                        </button>
-                        <button type="submit"
-                                ui-sref="material-pi.edit({id:material.id})"
-                                class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                            <span class="hidden-sm-down"></span>
-                        </button>
-                        <button type="submit"
-                                ui-sref="material-pi.delete({id:material.id})"
-                                class="btn btn-danger btn-sm">
-                            <span class="glyphicon glyphicon-remove-circle"></span>
-                            <span class="hidden-sm-down"></span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="pi-card-wp materials-list">
+    <div class="blog-card spring-fever" ng-repeat="material in vm.session.materials track by material.id">
+        <p class="card-info">
+            {{material.name}}
+        </p><!-- /.card-info -->
+        <div class="utility-info">
+            <ul class="utility-list">
+                <li class="date">{{material.materialFileContentType}}</li>
+                <a ng-if="material.materialFile"
+                   ng-click="vm.openFile(material.materialFileContentType, material.materialFile)">open</a>
+            </ul>
+        </div><!-- /.utility-info -->
+        <div class="btn-group flex-btn-group-container">
+            <button type="submit"
+                    ui-sref="material-pi-detail({id:material.id})"
+                    class="btn btn-info btn-sm pi-button">
+                <span class="glyphicon glyphicon-eye-open"></span>
+                <span class="hidden-sm-down"></span>
+            </button>
+            <button type="submit"
+                    ui-sref="material-pi.edit({id:material.id})"
+                    class="btn btn-primary btn-sm pi-button">
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="hidden-sm-down"></span>
+            </button>
+            <button type="submit"
+                    ng-click="vm.removeMaterial(material.id)"
+                    class="btn btn-danger btn-sm pi-button">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+                <span class="hidden-sm-down"></span>
+            </button>
+        </div>
+    </div><!-- /.blog-card -->
 </div>
-
 
 
 

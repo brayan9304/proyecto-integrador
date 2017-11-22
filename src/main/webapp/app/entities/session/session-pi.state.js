@@ -45,6 +45,7 @@
                 },
                 resolve: {
                     entity: ['$stateParams', 'Session', function ($stateParams, Session) {
+                        debugger;
                         return Session.get({id: $stateParams.idSession}).$promise;
                     }],
                     previousState: ["$state", function ($state) {
@@ -145,12 +146,12 @@
                 }]
             })
             .state('sessions-pi.addMaterial', {
-                parent: 'sessions-pi',
+                parent: 'session-pi-detail',
                 url: '/add-material/{idSession}',
                 data: {
                     authorities: ['ROLE_USER']
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                onEnter: ['$window', '$stateParams', '$state', '$uibModal', function ($window, $stateParams, $state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'app/entities/session/session-material-pi-dialog.html',
                         controller: 'SessionMaterialPiDialogController',
@@ -163,9 +164,17 @@
                             }]
                         }
                     }).result.then(function () {
-                        $state.go('sessions-pi', {id: $stateParams.idSession}, {reload: 'sessions-pi'});
+                        $state.transitionTo("session-pi-detail", $stateParams, {
+                            reload: true,
+                            inherit: false,
+                            notify: true
+                        });
                     }, function () {
-                        $state.go('^');
+                        $state.transitionTo("session-pi-detail", $stateParams, {
+                            reload: true,
+                            inherit: false,
+                            notify: true
+                        });
                     });
                 }]
             })

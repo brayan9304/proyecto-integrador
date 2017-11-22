@@ -1,13 +1,13 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('proyectoIntegradorApp')
         .controller('SessionPiDetailController', SessionPiDetailController);
 
-    SessionPiDetailController.$inject = ['$scope', '$rootScope', 'previousState', 'entity', 'DataUtils'];
+    SessionPiDetailController.$inject = ['$scope', '$rootScope', 'previousState', 'entity', 'DataUtils', 'Session'];
 
-    function SessionPiDetailController($scope, $rootScope, previousState, entity, DataUtils) {
+    function SessionPiDetailController($scope, $rootScope, previousState, entity, DataUtils, Session) {
         var vm = this;
 
         vm.session = entity;
@@ -15,10 +15,36 @@
         vm.materials = vm.session.materials;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
+        vm.removeMaterial = removeMaterialFromSession;
 
-        var unsubscribe = $rootScope.$on('proyectoIntegradorApp:sessionUpdate', function(event, result) {
+        var unsubscribe = $rootScope.$on('proyectoIntegradorApp:sessionUpdate', function (event, result) {
             vm.session = result;
         });
         $scope.$on('$destroy', unsubscribe);
+
+        function removeMaterialFromSession(idMaterial) {
+            deleteMaterials(idMaterial);
+            if (vm.session.id !== null) {
+                Session.update(vm.session);
+            } else {
+                Session.save(vm.session);
+            }
+        }
+
+        function deleteMaterials(materialId) {
+            var found = false;
+            var counter = 0;
+            var index = null;
+            while (!found) {
+                if (vm.session.materials[counter].id == materialId) {
+                    found = true;
+                    index = counter;
+                }
+                counter++;
+            }
+            if (index != null) {
+                vm.session.materials.splice(index, 1);
+            }
+        }
     }
 })();

@@ -91,6 +91,7 @@
             $scope.$emit('proyectoIntegradorApp:sessionUpdate', result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
+            vm.materials = vm.session.materials;
         }
 
         function onSaveError() {
