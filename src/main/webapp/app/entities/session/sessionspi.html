@@ -1,54 +1,16 @@
+<jhi-alert></jhi-alert>
+
 <div>
-    <h2>Sessions</h2>
+    <h2 class="pi-main-title">Sessions</h2>
+
     <div class="search-box-wp">
         <div class="form-group">
             <label for="filter_text">Filter:</label>
             <input type="text" class="form-control input-sm" id="filter_text" ng-model="sessionText">
         </div>
-    </div>
-    <jhi-alert></jhi-alert>
-    <div class="card pi-card" ng-repeat="session in vm.sessions | filter: sessionText">
-        <div class="card-block">
-            <div class="pi-course-icon-wp">
-                <span class="glyphicon glyphicon-list-alt pi-course-icon"></span>
-            </div>
-            <div class="pi-card-content">
-                <h4 class="card-title">Name: {{session.name}}</h4>
-                <p class="card-text"><b>Description:</b> {{session.description}}</p>
-                <p class="card-text"><b>Date:</b> {{session.date | date:'medium'}}</p>
-                <p class="card-text"><b>Semester:</b> {{session.semester}}</p>
-                <button type="submit"
-                        ui-sref="session-pi-detail({idSession:session.id})"
-                        class="pi-action-button">
-                    <span class="glyphicon glyphicon-eye-open"></span>
-                    <span class="hidden-sm-down"></span>
-                </button>
-                <button type="submit"
-                        ui-sref="sessions-pi.edit({idSession:session.id})"
-                        class="pi-action-button">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                    <span class="hidden-sm-down"></span>
-                </button>
-                <button type="submit"
-                        ui-sref="sessions-pi.delete({idSession:session.id})"
-                        class="pi-action-button">
-                    <span class="glyphicon glyphicon-trash"></span>
-                    <span class="hidden-sm-down"></span>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="sessions-pi.new">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span>
-                        Create new Session
-                    </span>
-                </button>
-            </div>
-        </div>
+        <button class="btn pi-add-button" ui-sref="sessions-pi.new">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
     </div>
 </div>
 
@@ -86,3 +48,5 @@
         </button>
     </div><!-- /.blog-card -->
 </div>
+
+

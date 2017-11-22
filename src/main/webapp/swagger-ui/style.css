@@ -5,7 +5,7 @@ nav span {
     color: #ffffff !important;
 }
 
-.pi-navbar{
+.pi-navbar {
     position: fixed;
     top: 0;
     width: 100%;
@@ -31,7 +31,7 @@ nav span {
 }
 
 .pi-container {
-    padding: 20px;
+    padding: 100px 20px 20px;
     max-width: 1200px;
 }
 
@@ -66,8 +66,8 @@ dt, dd {
 }
 
 .search-box-wp {
-    text-align: right;
-    margin-bottom: 30px;
+    text-align: left;
+    margin-top: 30px;
 }
 
 .search-box-wp .form-group {
@@ -159,5 +159,23 @@ dt, dd {
 .pi-card-wp {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+}
+
+.pi-main-title {
+    text-align: center;
+}
+
+@media (min-width: 480px) {
+    .blog-card {
+        width: calc(33% - 40px);
+    }
+}
+
+.pi-add-button, .pi-add-button:hover, .pi-add-button:active  {
+    background-color: rgb(84, 116, 128);
+    color: white !important;
+    box-shadow: 10px 10px 5px #888888;
+    border-radius: 50% !important;
+    display: block !important;
 }
