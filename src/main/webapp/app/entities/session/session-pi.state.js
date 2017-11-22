@@ -44,9 +44,8 @@
                     }
                 },
                 resolve: {
-                    entity: ['$stateParams', 'Session', function ($stateParams, Session) {
-                        debugger;
-                        return Session.get({id: $stateParams.idSession}).$promise;
+                    entityId: ['$stateParams', function ($stateParams) {
+                        return $stateParams.idSession;
                     }],
                     previousState: ["$state", function ($state) {
                         var currentStateData = {
@@ -164,17 +163,9 @@
                             }]
                         }
                     }).result.then(function () {
-                        $state.transitionTo("session-pi-detail", $stateParams, {
-                            reload: true,
-                            inherit: false,
-                            notify: true
-                        });
+                        $state.go('^', {}, {reload: true});
                     }, function () {
-                        $state.transitionTo("session-pi-detail", $stateParams, {
-                            reload: true,
-                            inherit: false,
-                            notify: true
-                        });
+                        $state.go('^');
                     });
                 }]
             })

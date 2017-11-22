@@ -5,17 +5,18 @@
         .module('proyectoIntegradorApp')
         .controller('SessionPiDetailController', SessionPiDetailController);
 
-    SessionPiDetailController.$inject = ['$scope', '$rootScope', 'previousState', 'entity', 'DataUtils', 'Session'];
+    SessionPiDetailController.$inject = ['$state', '$scope', '$rootScope', 'previousState', 'entityId', 'DataUtils', 'Session'];
 
-    function SessionPiDetailController($scope, $rootScope, previousState, entity, DataUtils, Session) {
+    function SessionPiDetailController($state, $scope, $rootScope, previousState, entityId, DataUtils, Session) {
         var vm = this;
 
-        vm.session = entity;
+        vm.session = Session.get({id: entityId});
         vm.previousState = previousState.name;
         vm.materials = vm.session.materials;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
         vm.removeMaterial = removeMaterialFromSession;
+
 
         var unsubscribe = $rootScope.$on('proyectoIntegradorApp:sessionUpdate', function (event, result) {
             vm.session = result;
