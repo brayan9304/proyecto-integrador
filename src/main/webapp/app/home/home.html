@@ -1,16 +1,18 @@
 <script src="app/customLibraries/caleandar.js"></script>
 <div ng-cloak>
+    <div ng-switch="vm.isAuthenticated()">
+        <div ng-switch-when="true">
+            <h1>Welcome, {{vm.account.login}}!</h1>
+        </div>
+    </div>
+    <div class="carousel-wp">
+        <div class="owl-carousel owl-theme col-md-7">
+            <div class="pi-carousel-item c-item-1"></div>
+            <div class="pi-carousel-item c-item-2"></div>
+            <div class="pi-carousel-item c-item-3"></div>
+        </div>
+    </div>
     <div class="calendar-wp">
         <div id="calendar"></div>
-    </div>
-    <div class="row">
-        <div class="col-md-8">
-            <div ng-switch="vm.isAuthenticated()">
-                <div ng-switch-when="true">
-                    <h1>Welcome, {{vm.account.login}}!</h1>
-                </div>
-
-            </div>
-        </div>
     </div>
 </div>

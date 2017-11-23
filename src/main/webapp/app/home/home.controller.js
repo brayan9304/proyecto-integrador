@@ -16,6 +16,15 @@
         vm.sessions = [];
         vm.events = [];
 
+        $(document).ready(function(){
+            $(".owl-carousel").owlCarousel(
+                {
+                    items: 1,
+                    autoplay: true,
+                    center: true,
+                    loop: true
+                });
+        });
 
         vm.register = register;
         $scope.$on('authenticationSuccess', function () {
