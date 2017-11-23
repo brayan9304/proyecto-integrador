@@ -20,6 +20,12 @@ entity Professor {
     relatedUserId Long required
 }
 
+entity Material {
+	id Long required,
+    name String required,
+    materialFile AnyBlob required
+}
+
 relationship OneToMany {
 	Course{session} to Session
 }
@@ -27,6 +33,11 @@ relationship OneToMany {
 relationship OneToMany {
 	Professor{course} to Course
 }
+
+relationship ManyToMany {
+	Session{Material(id)} to Material
+}
+
 
 dto * with mapstruct
 

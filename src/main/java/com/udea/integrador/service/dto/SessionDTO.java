@@ -29,6 +29,8 @@ public class SessionDTO implements Serializable {
 
     private Long courseId;
 
+    private Set<MaterialDTO> materials = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -75,6 +77,14 @@ public class SessionDTO implements Serializable {
 
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
+    }
+
+    public Set<MaterialDTO> getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(Set<MaterialDTO> materials) {
+        this.materials = materials;
     }
 
     @Override

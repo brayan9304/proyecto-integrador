@@ -5,6 +5,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -38,6 +40,12 @@ public class Session implements Serializable {
 
     @ManyToOne
     private Course course;
+
+    @ManyToMany
+    @JoinTable(name = "session_material",
+               joinColumns = @JoinColumn(name="sessions_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="materials_id", referencedColumnName="id"))
+    private Set<Material> materials = new HashSet<>();
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
@@ -111,6 +119,29 @@ public class Session implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Set<Material> getMaterials() {
+        return materials;
+    }
+
+    public Session materials(Set<Material> materials) {
+        this.materials = materials;
+        return this;
+    }
+
+    public Session addMaterial(Material material) {
+        this.materials.add(material);
+        return this;
+    }
+
+    public Session removeMaterial(Material material) {
+        this.materials.remove(material);
+        return this;
+    }
+
+    public void setMaterials(Set<Material> materials) {
+        this.materials = materials;
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 

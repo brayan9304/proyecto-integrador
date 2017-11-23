@@ -5,21 +5,11 @@
         .module('proyectoIntegradorApp')
         .controller('SessionPiController', SessionPiController);
 
-    SessionPiController.$inject = ['Session'];
+    SessionPiController.$inject = ['sessions'];
 
-    function SessionPiController(Session) {
-
+    function SessionPiController(sessions) {
         var vm = this;
+        vm.sessions = sessions;
 
-        vm.sessions = [];
-
-        loadAll();
-
-        function loadAll() {
-            Session.query(function(result) {
-                vm.sessions = result;
-                vm.searchQuery = null;
-            });
-        }
     }
 })();

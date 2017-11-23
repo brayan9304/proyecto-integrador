@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Session and its DTO SessionDTO.
  */
-@Mapper(componentModel = "spring", uses = {CourseMapper.class, })
+@Mapper(componentModel = "spring", uses = {CourseMapper.class, MaterialMapper.class, })
 public interface SessionMapper extends EntityMapper <SessionDTO, Session> {
 
     @Mapping(source = "course.id", target = "courseId")

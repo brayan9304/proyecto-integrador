@@ -14,5 +14,16 @@
                                  referencedColumnNames="id"
                                  referencedTableName="course"/>
 
+        <addForeignKeyConstraint baseColumnNames="sessions_id"
+                                 baseTableName="session_material"
+                                 constraintName="fk_session_material_sessions_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="session"/>
+        <addForeignKeyConstraint baseColumnNames="materials_id"
+                                 baseTableName="session_material"
+                                 constraintName="fk_session_material_materials_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="material"/>
+        
     </changeSet>
 </databaseChangeLog>

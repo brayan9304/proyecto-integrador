@@ -76,9 +76,18 @@
 
         <div class="form-group">
             <label for="field_course">Course</label>
-            <select class="form-control" id="field_course" name="course" ng-model="vm.session.courseId" ng-options="course.id as course.name for course in vm.courses"            >
+            <select class="form-control" id="field_course" name="course" ng-model="vm.session.courseId" ng-options="course.id as course.name for course in vm.courses">
                 <option value=""></option>
             </select>
+        </div>
+        <div class="form-group" ng-if="vm.materials.length > 0">
+            <label for="field_material">Material</label>
+            <select class="form-control" id="field_material" multiple name="material" ng-model="vm.materialsToUpdate" ng-options="material as material.name for material in vm.materials track by material.id"></select>
+        </div>
+
+        <div class="form-group" ng-if="vm.session.materials.length > 0">
+            <label for="field_material_delete">Delete materials (optional)</label>
+            <select class="form-control" id="field_material_delete" multiple name="materialDelete" ng-model="vm.materialsToDelete" ng-options="material as material.name for material in vm.session.materials track by material.id"></select>
         </div>
     </div>
     <div class="modal-footer">

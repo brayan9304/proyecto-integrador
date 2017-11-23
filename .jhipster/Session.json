@@ -6,6 +6,14 @@
             "otherEntityName": "course",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "material",
+            "otherEntityName": "material",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "fields": [

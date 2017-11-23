@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="theme-color" content="#000000">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="swagger-ui/style.css">
+    <link rel="stylesheet" href="content/css/theme1.css">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css content/css/vendor.css -->
     <!-- bower:css -->
@@ -26,7 +26,7 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <page-ribbon></page-ribbon>
-    <div ui-view="navbar" ng-cloak></div>
+    <div class="pi-navbar" ui-view="navbar" ng-cloak></div>
     <div class="container">
         <div class="pi-container" ui-view="content">
             <!-- Angular views -->
@@ -107,6 +107,8 @@
     <script src="app/entities/session/session-pi.service.js"></script>
     <script src="app/entities/session/session-pi.custom-service.js"></script>
     <script src="app/entities/session/session-pi.controller.js"></script>
+    <script src="app/entities/session/session-material-pi-dialog.controller.js"></script>
+    <script src="app/entities/session/reuse-material-pi-dialog.controller.js"></script>
     <script src="app/entities/professor/professor-pi-dialog.controller.js"></script>
     <script src="app/entities/professor/professor-pi-detail.controller.js"></script>
     <script src="app/entities/professor/professor-pi-delete-dialog.controller.js"></script>
@@ -114,6 +116,12 @@
     <script src="app/entities/professor/professor-pi.service.js"></script>
     <script src="app/entities/professor/professor-pi.custom-service.js"></script>
     <script src="app/entities/professor/professor-pi.controller.js"></script>
+    <script src="app/entities/material/material-pi-dialog.controller.js"></script>
+    <script src="app/entities/material/material-pi-detail.controller.js"></script>
+    <script src="app/entities/material/material-pi-delete-dialog.controller.js"></script>
+    <script src="app/entities/material/material-pi.state.js"></script>
+    <script src="app/entities/material/material-pi.service.js"></script>
+    <script src="app/entities/material/material-pi.controller.js"></script>
     <script src="app/entities/entity.state.js"></script>
     <script src="app/entities/course/course-pi-dialog.controller.js"></script>
     <script src="app/entities/course/course-pi-detail.controller.js"></script>
@@ -121,6 +129,7 @@
     <script src="app/entities/course/course-pi.state.js"></script>
     <script src="app/entities/course/course-pi.service.js"></script>
     <script src="app/entities/course/course-pi.custom-service.js"></script>
+    <script src="app/entities/course/course-pi.custom-by-course-service.js"></script>
     <script src="app/entities/course/course-pi.controller.js"></script>
     <script src="app/customLibraries/caleandar.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>

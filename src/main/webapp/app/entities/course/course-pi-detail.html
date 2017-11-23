@@ -28,12 +28,17 @@
 
     <button type="submit"
             ui-sref="{{ vm.previousState }}"
-            class="btn btn-info">
+            class="btn btn-info pi-button pi-button-transparent">
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
     </button>
 
-    <button type="button" ui-sref="course-pi-detail.edit({id:vm.course.id})" class="btn btn-primary">
+    <button type="button" ui-sref="course-pi-detail.edit({id:vm.course.id})" class="btn btn-primary pi-button">
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-sm-down"> Edit</span>
+    </button>
+
+    <button type="button" ui-sref="sessions-pi({id:vm.course.id})" class="btn btn-primary pi-button">
+        <span class="glyphicon glyphicon-blackboard"></span>
+        <span class="hidden-sm-down"> Sessions</span>
     </button>
 </div>
