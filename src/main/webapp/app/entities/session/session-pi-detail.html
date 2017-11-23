@@ -37,35 +37,35 @@
         <span class="hidden-sm-down"> Edit</span>
     </button>
 
-    <button type="button" ui-sref="sessions-pi.addMaterial({idSession:vm.session.id})" class="btn btn-primary pi-button">
+    <button type="button" ui-sref="sessions-pi.addMaterial({idSession:vm.session.id})"
+            class="btn btn-primary pi-button">
         <span class="glyphicon glyphicon-cloud-upload"></span>
         <span class="hidden-sm-down"> Add Material</span>
     </button>
+
+    <button type="button" ui-sref="reuse-material-pi({idSession:vm.session.id})"
+            class="btn btn-primary pi-button">
+        <span class="glyphicon glyphicon-cloud-upload"></span>
+        <span class="hidden-sm-down"> Reuse Material</span>
+    </button>
 </div>
 
+<h2 class="materials-title">Materials</h2>
 <div class="pi-card-wp materials-list">
     <div class="blog-card spring-fever" ng-repeat="material in vm.session.materials track by material.id">
         <p class="card-info">
-            {{material.name}}
+            <b>Name:</b> {{material.name}}
         </p><!-- /.card-info -->
         <div class="utility-info">
             <ul class="utility-list">
-                <li class="date">{{material.materialFileContentType}}</li>
-                <a ng-if="material.materialFile"
-                   ng-click="vm.openFile(material.materialFileContentType, material.materialFile)">open</a>
+                <li class="date"><b>Type:</b> {{material.materialFileContentType}}</li>
             </ul>
         </div><!-- /.utility-info -->
         <div class="btn-group flex-btn-group-container">
-            <button type="submit"
-                    ui-sref="material-pi-detail({id:material.id})"
-                    class="btn btn-info btn-sm pi-button">
-                <span class="glyphicon glyphicon-eye-open"></span>
-                <span class="hidden-sm-down"></span>
-            </button>
-            <button type="submit"
-                    ui-sref="material-pi.edit({id:material.id})"
-                    class="btn btn-primary btn-sm pi-button">
-                <span class="glyphicon glyphicon-pencil"></span>
+            <button class="btn btn-info btn-sm pi-button">
+                <a ng-if="material.materialFile"
+                   ng-click="vm.openFile(material.materialFileContentType, material.materialFile)"><span
+                    class="glyphicon glyphicon-eye-open"></span></a>
                 <span class="hidden-sm-down"></span>
             </button>
             <button type="submit"

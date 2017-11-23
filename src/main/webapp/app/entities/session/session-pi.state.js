@@ -73,6 +73,9 @@
                         resolve: {
                             entity: ['Session', function (Session) {
                                 return Session.get({id: $stateParams.idSession}).$promise;
+                            }],
+                            materialsEntity: ['Material', function (Material) {
+                                return Material.query().$promise;
                             }]
                         }
                     }).result.then(function () {
@@ -139,6 +142,34 @@
                         }
                     }).result.then(function () {
                         $state.go('sessions-pi', null, {reload: 'sessions-pi'});
+                    }, function () {
+                        $state.go('^');
+                    });
+                }]
+            })
+            .state('reuse-material-pi', {
+                parent: 'session-pi-detail',
+                url: '/reuse-material/{idSession}',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/entities/session/reuse-material-pi-dialog.html',
+                        controller: 'ReuseMaterialPiDialogController',
+                        controllerAs: 'vm',
+                        backdrop: 'static',
+                        size: 'lg',
+                        resolve: {
+                            entity: ['Session', function (Session) {
+                                return Session.get({id: $stateParams.idSession}).$promise;
+                            }],
+                            materialsEntity: ['Material', function (Material) {
+                                return Material.query().$promise;
+                            }]
+                        }
+                    }).result.then(function () {
+                        $state.go('^', {}, {reload: true});
                     }, function () {
                         $state.go('^');
                     });

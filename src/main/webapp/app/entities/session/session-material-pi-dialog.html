@@ -1,9 +1,9 @@
-
 <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="vm.clear()">&times;</button>
+                ng-click="vm.clear()">&times;
+        </button>
         <h4 class="modal-title" id="myMaterialLabel">Create or edit a Material</h4>
     </div>
     <div class="modal-body">
@@ -11,16 +11,16 @@
         <div class="form-group" ng-show="vm.material.id">
             <label for="id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.material.id" readonly />
+                   ng-model="vm.material.id" readonly/>
         </div>
         <div class="form-group">
             <label class="control-label" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="vm.material.name"
-                    required/>
+                   ng-model="vm.material.name"
+                   required/>
             <div ng-show="editForm.name.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.name.$error.required">
+                   ng-show="editForm.name.$error.required">
                     This field is required.
                 </p>
             </div>
@@ -29,9 +29,11 @@
             <label class="control-label" for="field_materialFile">Material File</label>
             <div>
                 <div ng-if="vm.material.materialFile" class="help-block clearfix">
-                    <a class="pull-left" ng-click="vm.openFile(vm.material.materialFileContentType, vm.material.materialFile)">open</a><br>
+                    <a class="pull-left"
+                       ng-click="vm.openFile(vm.material.materialFileContentType, vm.material.materialFile)">open</a><br>
                     <span class="pull-left">{{vm.material.materialFileContentType}}, {{vm.byteSize(vm.material.materialFile)}}</span>
-                    <button type="button" ng-click="vm.material.materialFile=null;vm.material.materialFileContentType=null;"
+                    <button type="button"
+                            ng-click="vm.material.materialFile=null;vm.material.materialFileContentType=null;"
                             class="btn btn-default btn-xs pull-right">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
@@ -42,13 +44,13 @@
                 </button>
             </div>
             <input type="hidden" class="form-control" name="materialFile" id="field_materialFile"
-                    ng-model="vm.material.materialFile"
-                    required/>
+                   ng-model="vm.material.materialFile"
+                   required/>
             <input type="hidden" class="form-control" name="materialFileContentType" id="field_materialFileContentType"
-                    ng-model="vm.material.materialFileContentType" />
+                   ng-model="vm.material.materialFileContentType"/>
             <div ng-show="editForm.materialFile.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.materialFile.$error.required">
+                   ng-show="editForm.materialFile.$error.required">
                     This field is required.
                 </p>
             </div>

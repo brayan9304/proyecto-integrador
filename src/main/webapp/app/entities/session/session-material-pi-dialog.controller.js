@@ -11,7 +11,10 @@
         var vm = this;
 
         vm.session = entity;
-        vm.material = null;
+        vm.material = {
+            materialFile: null,
+            materialFileContentType: null
+        };
         vm.clear = clear;
         vm.byteSize = DataUtils.byteSize;
         vm.openFile = DataUtils.openFile;
