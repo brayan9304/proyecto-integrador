@@ -418,7 +418,7 @@ dt, dd {
 }
 
 .materials-list a, .materials-list a:focus, .materials-list span {
-    color: rgb(201, 181, 91)  !important;
+    color: rgb(201, 181, 91) !important;
     border-color: transparent !important;
 }
 
@@ -462,4 +462,9 @@ dt, dd {
     .calendar-wp {
         float: right;
     }
+}
+
+
+.pi-search-form {
+    padding-top: 30px;
 }
