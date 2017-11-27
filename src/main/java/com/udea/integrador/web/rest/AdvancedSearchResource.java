@@ -5,12 +5,11 @@ import com.google.gson.Gson;
 import com.udea.integrador.service.CourseService;
 import com.udea.integrador.service.MaterialService;
 import com.udea.integrador.service.ProfessorService;
-import com.udea.integrador.service.dto.AdvancedSearchDTO;
-import com.udea.integrador.service.dto.MaterialDTO;
+import com.udea.integrador.service.SessionService;
+import com.udea.integrador.service.dto.*;
 import com.udea.integrador.web.rest.util.HeaderUtil;
-import com.udea.integrador.service.dto.CourseDTO;
-import com.udea.integrador.service.dto.ProfessorDTO;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * REST controller for managing Course.
@@ -43,10 +43,13 @@ public class AdvancedSearchResource {
 
     private final MaterialService materialService;
 
-    public AdvancedSearchResource(CourseService courseService, ProfessorService professorService, MaterialService materialService) {
+    private final SessionService sessionService;
+
+    public AdvancedSearchResource(CourseService courseService, ProfessorService professorService, MaterialService materialService, SessionService sessionService) {
         this.courseService = courseService;
         this.professorService = professorService;
         this.materialService = materialService;
+        this.sessionService = sessionService;
     }
 
     /**
@@ -60,7 +63,38 @@ public class AdvancedSearchResource {
         log.debug("Trying to get params ");
         Gson gson = new Gson();
         AdvancedSearchDTO advancedSearchDTO = gson.fromJson(data, AdvancedSearchDTO.class);
-        log.debug(advancedSearchDTO.getCourse());
+        log.debug(advancedSearchDTO.getSessionKeywords());
+        List<MaterialDTO> materials = new ArrayList<>();
+        if (!StringUtils.isEmpty(advancedSearchDTO.getSessionKeywords())) {
+            materials.addAll(getMaterialsBySessionKeywords(advancedSearchDTO.getSessionKeywords()));
+        }
         return null;
     }
+
+    private List<MaterialDTO> getMaterialsBySessionKeywords(String sessionKeywords) {
+        String[] keywords = sessionKeywords.split(",");
+        log.debug("keyword 1: " + keywords[0]);
+        List<SessionDTO> sessions = this.sessionService.findAll();
+        List<MaterialDTO> materials = new ArrayList<>();
+
+        boolean sessionPass = false;
+        for (SessionDTO sessionDTO : sessions) {
+            sessionPass = false;
+            log.debug("TESTING SESSION ********************************** : " + sessionDTO.getDescription());
+            for (int i = 0; i < keywords.length; i++) {
+                if (sessionDTO.getDescription().toLowerCase().contains(keywords[i].toLowerCase())) {
+                    sessionPass = true;
+                }
+            }
+            if (sessionPass) {
+                log.debug("Session passed : " + sessionDTO.getDescription());
+                materials.addAll(sessionDTO.getMaterials());
+            }
+        }
+
+        log.debug("MATERIALS SIZE ********************************** : " + materials.size());
+
+        return materials;
+    }
+
 }

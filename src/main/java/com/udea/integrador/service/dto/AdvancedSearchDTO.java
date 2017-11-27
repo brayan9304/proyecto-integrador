@@ -16,9 +16,6 @@ import java.util.Set;
  */
 public class AdvancedSearchDTO implements Serializable {
 
-    @JsonProperty("course")
-    private String course;
-
     @JsonProperty("sessionKeywords")
     private String sessionKeywords;
 
@@ -36,7 +33,6 @@ public class AdvancedSearchDTO implements Serializable {
     @Override
     public String toString() {
         return "AdvancedSearchDTO{" +
-            "course=" + getCourse() +
             ", sessionKeywords='" + getSessionKeywords() + "'" +
             ", materialKeywords='" + getMaterialKeywords() + "'" +
             ", startDate='" + getStartDate() + "'" +
@@ -44,13 +40,6 @@ public class AdvancedSearchDTO implements Serializable {
             "}";
     }
 
-    public String getCourse() {
-        return course;
-    }
-
-    public void setCourse(String course) {
-        this.course = course;
-    }
 
     public String getSessionKeywords() {
         return sessionKeywords;

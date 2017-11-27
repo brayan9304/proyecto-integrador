@@ -14,7 +14,6 @@
         vm.params = {
             startDate: null,
             endDate: null,
-            course: null,
             SessionKeywords: null,
             materialKeyword: null
         };
