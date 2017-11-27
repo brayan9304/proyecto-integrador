@@ -5,11 +5,12 @@
         .module('proyectoIntegradorApp')
         .controller('AdvancedSearchController', AdvancedSearchController);
 
-    AdvancedSearchController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'Session', 'CustomSession'];
+    AdvancedSearchController.$inject = ['$scope', 'Principal', 'AdvancedSearch'];
 
-    function AdvancedSearchController($scope, Principal, LoginService, $state, Session, CustomSession) {
+    function AdvancedSearchController($scope, Principal, AdvancedSearch) {
         var vm = this;
         vm.account = null;
+        vm.materials = [];
         vm.params = {
             startDate: null,
             endDate: null,
@@ -27,8 +28,16 @@
             });
         }
 
-        function search() {
+        function getSearchResults(data) {
+            AdvancedSearch.query({data: data}, function (result) {
+                vm.materials = result;
+            });
+        }
 
+        function search() {
+            debugger;
+            vm.searchData = JSON.stringify(vm.params);
+            getSearchResults(vm.searchData);
         }
     }
 })();
