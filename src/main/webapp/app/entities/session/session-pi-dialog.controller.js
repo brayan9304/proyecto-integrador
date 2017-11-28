@@ -5,13 +5,14 @@
         .module('proyectoIntegradorApp')
         .controller('SessionPiDialogController', SessionPiDialogController);
 
-    SessionPiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'materialsEntity', 'Session', 'Course', 'CustomCourse', 'Principal'];
+    SessionPiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'materialsEntity', 'courseEntity', 'Session','Principal'];
 
-    function SessionPiDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, materialsEntity, Session, Course, CustomCourse, Principal) {
+    function SessionPiDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, materialsEntity, courseEntity, Session, Principal) {
         var vm = this;
 
         vm.account = null;
         vm.session = entity;
+        vm.session.courseId = courseEntity.id;
         vm.materials = materialsEntity;
         vm.materialsToUpdate = [];
         vm.materialsToDelete = [];
@@ -19,7 +20,7 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.courses = [];
+        vm.course = courseEntity;
 
         $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();
@@ -30,7 +31,6 @@
         function getAccount() {
             Principal.identity().then(function (account) {
                 vm.account = account;
-                loadAllCourses(account.id);
             });
         }
 
@@ -39,7 +39,11 @@
         }
 
         function save() {
+            debugger;
             vm.isSaving = true;
+            if (!vm.session.materials) {
+                vm.session.materials = [];
+            }
             updateMaterials();
             deleteMaterials();
             if (vm.session.id !== null) {
@@ -56,6 +60,7 @@
                     vm.session.materials.push(material);
                 }
             });
+
         }
 
         function deleteMaterials() {
@@ -79,11 +84,13 @@
 
         function materialExists(material) {
             var exists = false;
-            vm.session.materials.forEach(function (m) {
-                if (material.id == m.id) {
-                    exists = true;
-                }
-            });
+            if (vm.session.materials) {
+                vm.session.materials.forEach(function (m) {
+                    if (material.id == m.id) {
+                        exists = true;
+                    }
+                });
+            }
             return exists;
         }
 
@@ -102,12 +109,6 @@
 
         function openCalendar(date) {
             vm.datePickerOpenStatus[date] = true;
-        }
-
-        function loadAllCourses(id) {
-            CustomCourse.query({id: id}, function (result) {
-                vm.courses = result;
-            });
         }
     }
 })();

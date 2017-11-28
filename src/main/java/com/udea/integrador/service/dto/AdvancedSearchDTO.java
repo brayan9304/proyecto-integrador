@@ -23,11 +23,10 @@ public class AdvancedSearchDTO implements Serializable {
     private String materialKeywords;
 
     @JsonProperty("startDate")
-    private DateTime startDate;
+    private ZonedDateTime startDate;
 
     @JsonProperty("endDate")
-    private DateTime endDate;
-
+    private ZonedDateTime endDate;
 
 
     @Override
@@ -57,19 +56,17 @@ public class AdvancedSearchDTO implements Serializable {
         this.materialKeywords = materialKeywords;
     }
 
-    public DateTime getStartDate() {
-        return startDate;
-    }
+    public ZonedDateTime getStartDate() { return startDate; }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 }

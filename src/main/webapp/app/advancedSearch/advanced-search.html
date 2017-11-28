@@ -37,3 +37,31 @@
         </button>
     </div>
 </form>
+
+<h2 class="materials-title">Materials</h2>
+<div class="pi-card-wp materials-list">
+    <div class="blog-card spring-fever" ng-repeat="material in vm.materials track by material.id">
+        <p class="card-info">
+            <b>Name:</b> {{material.name}}
+        </p><!-- /.card-info -->
+        <div class="utility-info">
+            <ul class="utility-list">
+                <li class="date"><b>Type:</b> {{material.materialFileContentType}}</li>
+            </ul>
+        </div><!-- /.utility-info -->
+        <div class="btn-group flex-btn-group-container">
+            <button class="btn btn-info btn-sm pi-button">
+                <a ng-if="material.materialFile"
+                   ng-click="vm.openFile(material.materialFileContentType, material.materialFile)"><span
+                    class="glyphicon glyphicon-eye-open"></span></a>
+                <span class="hidden-sm-down"></span>
+            </button>
+            <button type="submit"
+                    ng-click="vm.removeMaterial(material.id)"
+                    class="btn btn-danger btn-sm pi-button">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+                <span class="hidden-sm-down"></span>
+            </button>
+        </div>
+    </div><!-- /.blog-card -->
+</div>

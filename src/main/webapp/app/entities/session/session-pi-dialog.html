@@ -1,9 +1,9 @@
-
 <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="vm.clear()">&times;</button>
+                ng-click="vm.clear()">&times;
+        </button>
         <h4 class="modal-title" id="mySessionLabel">Create or edit a Session</h4>
     </div>
     <div class="modal-body">
@@ -11,16 +11,16 @@
         <div class="form-group" ng-show="vm.session.id">
             <label for="id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.session.id" readonly />
+                   ng-model="vm.session.id" readonly/>
         </div>
         <div class="form-group">
             <label class="control-label" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="vm.session.name"
-                    required/>
+                   ng-model="vm.session.name"
+                   required/>
             <div ng-show="editForm.name.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.name.$error.required">
+                   ng-show="editForm.name.$error.required">
                     This field is required.
                 </p>
             </div>
@@ -28,67 +28,71 @@
         <div class="form-group">
             <label class="control-label" for="field_description">Description</label>
             <input type="text" class="form-control" name="description" id="field_description"
-                    ng-model="vm.session.description"
-                    required/>
+                   ng-model="vm.session.description"
+                   required/>
             <div ng-show="editForm.description.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.description.$error.required">
+                   ng-show="editForm.description.$error.required">
                     This field is required.
                 </p>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label" for="field_semester">Semester</label>
-            <input type="number" class="form-control" name="semester" id="field_semester"
-                    ng-model="vm.session.semester"
-                    required/>
+            <input type="number" class="form-control" name="semester" id="field_semester" max="2" min="1"
+                   ng-model="vm.session.semester"
+                   required/>
             <div ng-show="editForm.semester.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.semester.$error.required">
+                   ng-show="editForm.semester.$error.required">
                     This field is required.
                 </p>
                 <p class="help-block"
-                    ng-show="editForm.semester.$error.number">
+                   ng-show="editForm.semester.$error.number">
                     This field should be a number.
                 </p>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label" for="field_date">Date</label>
-                <div class="input-group">
-                    <input id="field_date" type="text" class="form-control" name="date" datetime-picker="{{dateformat}}" ng-model="vm.session.date" is-open="vm.datePickerOpenStatus.date"
-                    required/>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
+            <div class="input-group">
+                <input id="field_date" type="text" class="form-control" name="date" datetime-picker="{{dateformat}}"
+                       ng-model="vm.session.date" is-open="vm.datePickerOpenStatus.date"
+                       required/>
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i
+                            class="glyphicon glyphicon-calendar"></i></button>
                     </span>
-                </div>
+            </div>
             <div ng-show="editForm.date.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.date.$error.required">
+                   ng-show="editForm.date.$error.required">
                     This field is required.
                 </p>
                 <p class="help-block"
-                    ng-show="editForm.date.$error.ZonedDateTimelocal">
+                   ng-show="editForm.date.$error.ZonedDateTimelocal">
                     This field should be a date and time.
                 </p>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="field_course">Course</label>
-            <select class="form-control" id="field_course" name="course" ng-model="vm.session.courseId" ng-options="course.id as course.name for course in vm.courses">
-                <option value=""></option>
-            </select>
-        </div>
         <div class="form-group" ng-if="vm.materials.length > 0">
             <label for="field_material">Material</label>
-            <select class="form-control" id="field_material" multiple name="material" ng-model="vm.materialsToUpdate" ng-options="material as material.name for material in vm.materials track by material.id"></select>
+            <select class="form-control" id="field_material" multiple name="material" ng-model="vm.materialsToUpdate"
+                    ng-options="material as material.name for material in vm.materials track by material.id"></select>
         </div>
 
         <div class="form-group" ng-if="vm.session.materials.length > 0">
             <label for="field_material_delete">Delete materials (optional)</label>
-            <select class="form-control" id="field_material_delete" multiple name="materialDelete" ng-model="vm.materialsToDelete" ng-options="material as material.name for material in vm.session.materials track by material.id"></select>
+            <select class="form-control" id="field_material_delete" multiple name="materialDelete"
+                    ng-model="vm.materialsToDelete"
+                    ng-options="material as material.name for material in vm.session.materials track by material.id"></select>
         </div>
+
+        <div class="form-group" ng-show="vm.course.name">
+            <label>Course : {{vm.course.name}}</label>
+        </div>
+
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

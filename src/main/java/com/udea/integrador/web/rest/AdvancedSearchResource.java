@@ -2,6 +2,7 @@ package com.udea.integrador.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.udea.integrador.service.CourseService;
 import com.udea.integrador.service.MaterialService;
 import com.udea.integrador.service.ProfessorService;
@@ -10,6 +11,7 @@ import com.udea.integrador.service.dto.*;
 import com.udea.integrador.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +22,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.ZonedDateTime;
+import java.util.*;
 import java.util.function.Predicate;
 
 /**
@@ -53,7 +53,7 @@ public class AdvancedSearchResource {
     }
 
     /**
-     * GET  /courses : get all the courses.
+     * GET  /materials : get all the materials that meets criteria.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of courses in body
      */
@@ -64,35 +64,100 @@ public class AdvancedSearchResource {
         Gson gson = new Gson();
         AdvancedSearchDTO advancedSearchDTO = gson.fromJson(data, AdvancedSearchDTO.class);
         log.debug(advancedSearchDTO.getSessionKeywords());
-        List<MaterialDTO> materials = new ArrayList<>();
+        Set<MaterialDTO> materials = new HashSet<>();
+
         if (!StringUtils.isEmpty(advancedSearchDTO.getSessionKeywords())) {
             materials.addAll(getMaterialsBySessionKeywords(advancedSearchDTO.getSessionKeywords()));
         }
-        return null;
+
+        if (!StringUtils.isEmpty(advancedSearchDTO.getMaterialKeywords())) {
+            materials.addAll(getMaterialsByMaterialKeywords(advancedSearchDTO.getMaterialKeywords()));
+        }
+
+        if (advancedSearchDTO.getStartDate() != null || advancedSearchDTO.getEndDate() != null) {
+            materials.addAll(getMaterialsByDate(advancedSearchDTO.getStartDate(), advancedSearchDTO.getEndDate()));
+        }
+
+        return materials;
     }
 
     private List<MaterialDTO> getMaterialsBySessionKeywords(String sessionKeywords) {
         String[] keywords = sessionKeywords.split(",");
-        log.debug("keyword 1: " + keywords[0]);
+        log.debug("BEGIN SESSION KEYWORD SEARCH ********************************** : ");
         List<SessionDTO> sessions = this.sessionService.findAll();
         List<MaterialDTO> materials = new ArrayList<>();
 
         boolean sessionPass = false;
         for (SessionDTO sessionDTO : sessions) {
             sessionPass = false;
-            log.debug("TESTING SESSION ********************************** : " + sessionDTO.getDescription());
             for (int i = 0; i < keywords.length; i++) {
                 if (sessionDTO.getDescription().toLowerCase().contains(keywords[i].toLowerCase())) {
                     sessionPass = true;
                 }
             }
             if (sessionPass) {
-                log.debug("Session passed : " + sessionDTO.getDescription());
+                log.debug("CURRENT SESSION MEETS CRITERIA **********************************  : " + sessionDTO.getName() + " with id: " + sessionDTO.getId());
                 materials.addAll(sessionDTO.getMaterials());
             }
         }
 
-        log.debug("MATERIALS SIZE ********************************** : " + materials.size());
+        log.debug("FINALLY RETURNS ********************************** : " + materials.size() + "MATERIALS ********************************** : ");
+
+        return materials;
+    }
+
+    private List<MaterialDTO> getMaterialsByMaterialKeywords(String materialKeywords) {
+        String[] keywords = materialKeywords.split(",");
+        log.debug("BEGIN MATERIAL KEYWORD SEARCH ********************************** : ");
+        List<MaterialDTO> materialList = this.materialService.findAll();
+        List<MaterialDTO> materials = new ArrayList<>();
+
+        boolean materialPass = false;
+        for (MaterialDTO materialDTO : materialList) {
+            materialPass = false;
+            for (int i = 0; i < keywords.length; i++) {
+                if (materialDTO.getName().toLowerCase().contains(keywords[i].toLowerCase())) {
+                    materialPass = true;
+                }
+            }
+            if (materialPass) {
+                log.debug("CURRENT MATERIAL MEETS CRITERIA **********************************  : " + materialDTO.getName() + " with id: " + materialDTO.getId());
+                materials.add(materialDTO);
+            }
+        }
+
+        log.debug("FINALLY RETURNS ********************************** : " + materials.size() + "MATERIALS ********************************** : ");
+
+        return materials;
+    }
+
+    private List<MaterialDTO> getMaterialsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
+        log.debug("BEGIN DATE SEARCH ********************************** : ");
+        List<SessionDTO> sessionList = this.sessionService.findAll();
+        List<MaterialDTO> materials = new ArrayList<>();
+        log.debug("START DATE ********************************** : "+startDate );
+        log.debug("END DATE ********************************** : "+endDate );
+
+        for (SessionDTO sessionDTO : sessionList) {
+            if (startDate != null && endDate != null) {
+                if (sessionDTO.getDate().isAfter(startDate) && sessionDTO.getDate().isBefore(endDate)) {
+                    log.debug("CURRENT SESSION MEETS CRITERIA **********************************  : " + sessionDTO.getName() + " with id: " + sessionDTO.getId());
+                    materials.addAll(sessionDTO.getMaterials());
+                }
+            } else if (startDate != null) {
+                if (sessionDTO.getDate().isAfter(startDate)) {
+                    log.debug("CURRENT SESSION MEETS CRITERIA **********************************  : " + sessionDTO.getName() + " with id: " + sessionDTO.getId());
+                    materials.addAll(sessionDTO.getMaterials());
+                }
+            } else {
+                if (sessionDTO.getDate().isBefore(endDate)) {
+                    log.debug("CURRENT SESSION MEETS CRITERIA **********************************  : " + sessionDTO.getName() + " with id: " + sessionDTO.getId());
+                    materials.addAll(sessionDTO.getMaterials());
+                }
+            }
+        }
+
+        log.debug("FINALLY RETURNS ********************************** : " + materials.size() + "MATERIALS ********************************** : ");
 
         return materials;
     }

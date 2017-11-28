@@ -15,7 +15,7 @@
             startDate: null,
             endDate: null,
             SessionKeywords: null,
-            materialKeyword: null
+            materialKeywords: null
         };
         vm.search = search;
 
@@ -35,6 +35,13 @@
 
         function search() {
             debugger;
+            if (vm.params.materialKeywords) {
+                vm.params.materialKeywords = vm.params.materialKeywords.replace(/\s,*/, '');
+            }
+            if (vm.params.sessionKeywords) {
+                vm.params.sessionKeywords = vm.params.sessionKeywords.replace(/\s,*/, '');
+            }
+
             vm.searchData = JSON.stringify(vm.params);
             getSearchResults(vm.searchData);
         }
