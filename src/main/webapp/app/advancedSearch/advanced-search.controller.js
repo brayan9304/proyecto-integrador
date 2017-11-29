@@ -5,9 +5,9 @@
         .module('proyectoIntegradorApp')
         .controller('AdvancedSearchController', AdvancedSearchController);
 
-    AdvancedSearchController.$inject = ['$scope', 'Principal', 'AdvancedSearch'];
+    AdvancedSearchController.$inject = ['$scope', 'Principal', 'AdvancedSearch', 'DataUtils'];
 
-    function AdvancedSearchController($scope, Principal, AdvancedSearch) {
+    function AdvancedSearchController($scope, Principal, AdvancedSearch, DataUtils) {
         var vm = this;
         vm.account = null;
         vm.materials = [];
@@ -19,6 +19,8 @@
         };
         vm.startDate = null;
         vm.endDate = null;
+        vm.openFile = DataUtils.openFile;
+        vm.byteSize = DataUtils.byteSize;
         vm.search = search;
 
         getAccount();

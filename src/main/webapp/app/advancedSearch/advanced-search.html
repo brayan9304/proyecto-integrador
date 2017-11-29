@@ -56,10 +56,10 @@
                     class="glyphicon glyphicon-eye-open"></span></a>
                 <span class="hidden-sm-down"></span>
             </button>
-            <button type="submit"
-                    ng-click="vm.removeMaterial(material.id)"
+            <button type="button"
+                    ui-sref="add-material-popup({idProfessor:vm.account.id, idMaterial:material.id})"
                     class="btn btn-danger btn-sm pi-button">
-                <span class="glyphicon glyphicon-remove-circle"></span>
+                <span class="glyphicon glyphicon-plus"></span>
                 <span class="hidden-sm-down"></span>
             </button>
         </div>
