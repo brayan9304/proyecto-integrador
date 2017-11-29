@@ -10,7 +10,6 @@
     function SessionPiDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, materialsEntity, courseEntity, Session, Principal) {
         var vm = this;
 
-        debugger;
         vm.account = null;
         vm.session = entity;
         vm.session.courseId = entity.courseId;
