@@ -22,6 +22,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.function.Predicate;
@@ -62,6 +64,7 @@ public class AdvancedSearchResource {
     public Set<MaterialDTO> getSearchResults(@PathVariable String data) {
         log.debug("Trying to get params ");
         Gson gson = new Gson();
+        log.debug("--------------------------- json:  " + data.toString());
         AdvancedSearchDTO advancedSearchDTO = gson.fromJson(data, AdvancedSearchDTO.class);
         log.debug(advancedSearchDTO.getSessionKeywords());
         Set<MaterialDTO> materials = new HashSet<>();
@@ -73,6 +76,9 @@ public class AdvancedSearchResource {
         if (!StringUtils.isEmpty(advancedSearchDTO.getMaterialKeywords())) {
             materials.addAll(getMaterialsByMaterialKeywords(advancedSearchDTO.getMaterialKeywords()));
         }
+
+        log.debug("start date DTO  ********************************** : " + advancedSearchDTO.getStartDate());
+        log.debug("end date DTO  ********************************** : " + advancedSearchDTO.getStartDate());
 
         if (advancedSearchDTO.getStartDate() != null || advancedSearchDTO.getEndDate() != null) {
             materials.addAll(getMaterialsByDate(advancedSearchDTO.getStartDate(), advancedSearchDTO.getEndDate()));
@@ -131,26 +137,43 @@ public class AdvancedSearchResource {
         return materials;
     }
 
-    private List<MaterialDTO> getMaterialsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
+    private List<MaterialDTO> getMaterialsByDate(String startDate, String endDate) {
         log.debug("BEGIN DATE SEARCH ********************************** : ");
         List<SessionDTO> sessionList = this.sessionService.findAll();
         List<MaterialDTO> materials = new ArrayList<>();
-        log.debug("START DATE ********************************** : "+startDate );
-        log.debug("END DATE ********************************** : "+endDate );
+        log.debug("START DATE ********************************** : " + startDate);
+        log.debug("END DATE ********************************** : " + endDate);
 
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd yyyy");
+        Date startParsedDate = null;
+        Date endParsedDate = null;
+        try {
+
+            if (startDate != null) {
+                startParsedDate = formatter.parse(startDate);
+            }
+            if (endDate != null) {
+                endParsedDate = formatter.parse(endDate);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        log.debug("START DATE PARSED ********************************** : " + startParsedDate);
+        log.debug("END DATE  PARSED********************************** : " + endParsedDate);
         for (SessionDTO sessionDTO : sessionList) {
-            if (startDate != null && endDate != null) {
-                if (sessionDTO.getDate().isAfter(startDate) && sessionDTO.getDate().isBefore(endDate)) {
+            if (startParsedDate != null && endParsedDate != null) {
+                if ((sessionDTO.getDate().toInstant().isAfter(startParsedDate.toInstant())) && (sessionDTO.getDate().toInstant().isBefore(endParsedDate.toInstant()))) {
                     log.debug("CURRENT SESSION MEETS CRITERIA **********************************  : " + sessionDTO.getName() + " with id: " + sessionDTO.getId());
                     materials.addAll(sessionDTO.getMaterials());
                 }
-            } else if (startDate != null) {
-                if (sessionDTO.getDate().isAfter(startDate)) {
+            } else if (startParsedDate != null) {
+                if (sessionDTO.getDate().toInstant().isAfter(startParsedDate.toInstant())) {
                     log.debug("CURRENT SESSION MEETS CRITERIA **********************************  : " + sessionDTO.getName() + " with id: " + sessionDTO.getId());
                     materials.addAll(sessionDTO.getMaterials());
                 }
             } else {
-                if (sessionDTO.getDate().isBefore(endDate)) {
+                if (sessionDTO.getDate().toInstant().isBefore(endParsedDate.toInstant())) {
                     log.debug("CURRENT SESSION MEETS CRITERIA **********************************  : " + sessionDTO.getName() + " with id: " + sessionDTO.getId());
                     materials.addAll(sessionDTO.getMaterials());
                 }

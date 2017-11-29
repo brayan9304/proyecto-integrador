@@ -17,6 +17,8 @@
             SessionKeywords: null,
             materialKeywords: null
         };
+        vm.startDate = null;
+        vm.endDate = null;
         vm.search = search;
 
         getAccount();
@@ -35,11 +37,18 @@
 
         function search() {
             debugger;
+
             if (vm.params.materialKeywords) {
                 vm.params.materialKeywords = vm.params.materialKeywords.replace(/\s,*/, '');
             }
             if (vm.params.sessionKeywords) {
                 vm.params.sessionKeywords = vm.params.sessionKeywords.replace(/\s,*/, '');
+            }
+            if (vm.startDate) {
+                vm.params.startDate = vm.startDate.toDateString();
+            }
+            if (vm.endDate) {
+                vm.params.endDate = vm.endDate.toDateString();
             }
 
             vm.searchData = JSON.stringify(vm.params);
