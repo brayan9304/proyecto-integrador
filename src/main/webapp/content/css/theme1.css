@@ -1,6 +1,6 @@
 
 .cld-main {
-    width: 330px;
+    width: 240px;
 }
 
 .cld-main a {
@@ -350,11 +350,6 @@ dt, dd {
     display: inline-block;
 }
 
-.title-box {
-    display: flex;
-    justify-content: space-between;
-    padding-left: 20px;
-}
 
 .calendar-wp {
     margin-top: 40px;
@@ -418,7 +413,7 @@ dt, dd {
 }
 
 .materials-list a, .materials-list a:focus, .materials-list span {
-    color: rgb(201, 181, 91)  !important;
+    color: rgb(201, 181, 91) !important;
     border-color: transparent !important;
 }
 
@@ -442,11 +437,11 @@ dt, dd {
 }
 
 .c-item-2 {
-    background-image: url("../../content/images/things.jpg");
+    background-image: url("../../content/images/excuses.jpg");
 }
 
-.c-item-3 {
-    background-image: url("../../content/images/things.jpg");
+.c-item-4 {
+    background-image: url("../../content/images/child.jpg");
 }
 
 .carousel-wp {
@@ -462,4 +457,22 @@ dt, dd {
     .calendar-wp {
         float: right;
     }
+}
+
+@media (min-width: 400px) {
+    .cld-main {
+        width: 340px;
+    }
+}
+
+@media (min-width: 490px) {
+    .title-box {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 20px;
+    }
+}
+
+.pi-search-form {
+    padding-top: 30px;
 }

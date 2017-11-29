@@ -1,0 +1,21 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-if="vm.sessions.length > 0">
+            <label for="field_sessions">Sessions</label>
+            <select class="form-control" id="field_sessions" multiple name="session" ng-model="vm.sessionsToAdd"
+                    ng-options="session as session.name for session in vm.sessions track by session.id"></select>
+        </div>
+
+        <h3 class="add-material-alert"></h3>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

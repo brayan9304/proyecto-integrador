@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand logo" href="#/" ng-click="vm.collapseNavbar()">
-                <span>ProyectoIntegrador</span> <span class="navbar-version">v{{VERSION}}</span>
+                <span>ProyectoIntegrador</span>
             </a>
         </div>
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
@@ -64,6 +64,14 @@
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                     </ul>
                 </li>
+
+                <li ui-sref-active="active" ng-switch-when="true">
+                    <a ui-sref="advanced-search" ng-click="vm.collapseNavbar()">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <span class="hidden-sm">Advanced Search</span>
+                    </a>
+                </li>
+
                 <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>

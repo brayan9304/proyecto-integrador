@@ -7,7 +7,7 @@
             <label for="filter_text">Filter:</label>
             <input type="text" class="form-control input-sm" id="filter_text" ng-model="sessionText">
         </div>
-        <button class="btn pi-add-button" ui-sref="sessions-pi.new">
+        <button class="btn pi-add-button" ui-sref="sessions-pi.new({idCourse:vm.courseId})">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
     </div>
@@ -34,7 +34,7 @@
             <span class="hidden-sm-down"></span>
         </button>
         <button type="submit"
-                ui-sref="sessions-pi.edit({idSession:session.id})"
+                ui-sref="sessions-pi.edit({idCourse:vm.courseId, idSession:session.id})"
                 class="pi-action-button">
             <span class="glyphicon glyphicon-pencil"></span>
             <span class="hidden-sm-down"></span>

@@ -5,11 +5,12 @@
         .module('proyectoIntegradorApp')
         .controller('SessionPiController', SessionPiController);
 
-    SessionPiController.$inject = ['sessions'];
+    SessionPiController.$inject = ['sessions', 'courseId'];
 
-    function SessionPiController(sessions) {
+    function SessionPiController(sessions, courseId) {
         var vm = this;
         vm.sessions = sessions;
+        vm.courseId = courseId;
 
     }
 })();

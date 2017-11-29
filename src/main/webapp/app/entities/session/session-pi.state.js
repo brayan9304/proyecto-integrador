@@ -26,6 +26,9 @@
                 resolve: {
                     sessions: ['$stateParams', 'CustomSessionByCourse', function ($stateParams, CustomSessionByCourse) {
                         return CustomSessionByCourse.query({id: $stateParams.id}).$promise;
+                    }],
+                    courseId: ['$stateParams', function ($stateParams) {
+                        return $stateParams.id;
                     }]
                 }
             })
@@ -76,7 +79,10 @@
                             }],
                             materialsEntity: ['Material', function (Material) {
                                 return Material.query().$promise;
-                            }]
+                            }],
+                            courseEntity: function () {
+                                return null;
+                            }
                         }
                     }).result.then(function () {
                         $state.go('^', {}, {reload: false});
@@ -87,7 +93,7 @@
             })
             .state('sessions-pi.new', {
                 parent: 'sessions-pi',
-                url: '/new',
+                url: '/new/{idCourse}',
                 data: {
                     authorities: ['ROLE_USER']
                 },
@@ -105,11 +111,15 @@
                                     description: null,
                                     semester: null,
                                     date: null,
-                                    id: null
+                                    id: null,
+                                    courseId: null
                                 };
                             },
                             materialsEntity: ['Material', function (Material) {
                                 return Material.query().$promise;
+                            }],
+                            courseEntity: ['Course', function (Course) {
+                                return Course.get({id: $stateParams.idCourse}).$promise;
                             }]
                         }
                     }).result.then(function () {
@@ -121,7 +131,7 @@
             })
             .state('sessions-pi.edit', {
                 parent: 'sessions-pi',
-                url: '/edit/{idSession}',
+                url: '/edit/{idCourse}/{idSession}',
                 data: {
                     authorities: ['ROLE_USER']
                 },
@@ -138,6 +148,9 @@
                             }],
                             materialsEntity: ['Material', function (Material) {
                                 return Material.query().$promise;
+                            }],
+                            courseEntity: ['Course', function (Course) {
+                                return Course.get({id: $stateParams.idCourse}).$promise;
                             }]
                         }
                     }).result.then(function () {
