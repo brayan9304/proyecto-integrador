@@ -17,7 +17,6 @@
         vm.clear = clear;
 
         function save() {
-            debugger;
             if (vm.sessionsToAdd) {
                 vm.sessionsToAdd.forEach(function (session) {
                     if (!materialExists(session, vm.materialId)) {
@@ -43,7 +42,6 @@
         }
 
         function onSaveSuccess(result) {
-            debugger;
             $('.add-material-alert').html("Material Added");
             setTimeout(function(){
                 $uibModalInstance.close(result);
@@ -51,7 +49,6 @@
         }
 
         function onSaveError() {
-            debugger;
             $('.add-material-alert').html("Material not Added");
         }
 

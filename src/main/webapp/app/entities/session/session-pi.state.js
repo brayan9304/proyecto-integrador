@@ -79,7 +79,10 @@
                             }],
                             materialsEntity: ['Material', function (Material) {
                                 return Material.query().$promise;
-                            }]
+                            }],
+                            courseEntity: function () {
+                                return null;
+                            }
                         }
                     }).result.then(function () {
                         $state.go('^', {}, {reload: false});
@@ -108,7 +111,8 @@
                                     description: null,
                                     semester: null,
                                     date: null,
-                                    id: null
+                                    id: null,
+                                    courseId: null
                                 };
                             },
                             materialsEntity: ['Material', function (Material) {

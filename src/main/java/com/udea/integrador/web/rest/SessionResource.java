@@ -123,6 +123,7 @@ public class SessionResource {
     @Timed
     public List<SessionDTO> getAllCustomSessions(@PathVariable Long id) {
         log.debug("REST request to get all Sessions");
+        log.debug("ID: *********************************************: " + id);
         List<CourseDTO> courses = courseService.findAll();
         List<CourseDTO> customCourses = new ArrayList<>();
         ProfessorDTO professor = null;
@@ -139,9 +140,11 @@ public class SessionResource {
 
         CourseDTO sessionCourse = new CourseDTO();
         for (SessionDTO session : sessionList) {
-            sessionCourse = courseService.findOne(session.getCourseId());
-            if (customCourses.contains(sessionCourse)) {
-                customSessionList.add(session);
+            if (session.getCourseId() != null) {
+                sessionCourse = courseService.findOne(session.getCourseId());
+                if (customCourses.contains(sessionCourse)) {
+                    customSessionList.add(session);
+                }
             }
         }
         return customSessionList;

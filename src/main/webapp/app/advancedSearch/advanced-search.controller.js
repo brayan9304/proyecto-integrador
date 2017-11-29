@@ -34,17 +34,33 @@
         function getSearchResults(data) {
             AdvancedSearch.query({data: data}, function (result) {
                 vm.materials = result;
+                vm.startDate = null;
+                vm.endDate = null;
+                vm.params.startDate = null;
+                vm.params.endDate = null;
             });
         }
 
-        function search() {
-            debugger;
+        function splitKeywords(keywords) {
+            var str = keywords.split(",");
+            var result = "";
+            for (var i = 0; i < str.length; i++) {
+                str[i] = str[i].replace(/^\s+|\s+$/g, "");
+                if (i > 0) {
+                    result = result + "," + str[i];
+                } else {
+                    result = result + str[i];
+                }
+            }
+            return result;
+        }
 
+        function search() {
             if (vm.params.materialKeywords) {
-                vm.params.materialKeywords = vm.params.materialKeywords.replace(/\s,*/, '');
+                vm.params.materialKeywords = splitKeywords(vm.params.materialKeywords);
             }
             if (vm.params.sessionKeywords) {
-                vm.params.sessionKeywords = vm.params.sessionKeywords.replace(/\s,*/, '');
+                vm.params.sessionKeywords = splitKeywords(vm.params.sessionKeywords);
             }
             if (vm.startDate) {
                 vm.params.startDate = vm.startDate.toDateString();

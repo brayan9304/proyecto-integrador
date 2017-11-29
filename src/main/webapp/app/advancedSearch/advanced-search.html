@@ -14,7 +14,7 @@
         </div>
 
         <div class="form-group col-xs-12 col-sm-6 col-md-3">
-            <label class="control-label" for="field_start_date">Start Date</label>
+            <label class="control-label" for="field_start_date">Date (after/since)</label>
             <div class="input-group">
                 <input id="field_start_date" type="date" class="form-control" name="startDate"
                        datetime-picker="{{dateformat}}"
@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group col-xs-12 col-sm-6 col-md-3">
-            <label class="control-label" for="field_end_date">End Date</label>
+            <label class="control-label" for="field_end_date">Date (before/to)</label>
             <div class="input-group">
                 <input id="field_end_date" type="date" class="form-control" name="endDate"
                        datetime-picker="{{dateformat}}"
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="pi-search-btn">
-        <button type="submit" ng-disabled="advancedSearch.$invalid" class="btn btn-primary">
+        <button type="submit" ng-disabled="advancedSearch.$invalid" class="btn btn-primary pi-button">
             <span class="glyphicon glyphicon-search"></span>&nbsp;<span>Search</span>
         </button>
     </div>

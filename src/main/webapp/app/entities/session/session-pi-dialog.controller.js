@@ -5,14 +5,20 @@
         .module('proyectoIntegradorApp')
         .controller('SessionPiDialogController', SessionPiDialogController);
 
-    SessionPiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'materialsEntity', 'courseEntity', 'Session','Principal'];
+    SessionPiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'materialsEntity', 'courseEntity', 'Session', 'Principal'];
 
     function SessionPiDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, materialsEntity, courseEntity, Session, Principal) {
         var vm = this;
 
+        debugger;
         vm.account = null;
         vm.session = entity;
-        vm.session.courseId = courseEntity.id;
+        vm.session.courseId = entity.courseId;
+        if (entity.courseId === null) {
+            if (courseEntity != null) {
+                vm.session.courseId = courseEntity.id;
+            }
+        }
         vm.materials = materialsEntity;
         vm.materialsToUpdate = [];
         vm.materialsToDelete = [];
@@ -39,7 +45,6 @@
         }
 
         function save() {
-            debugger;
             vm.isSaving = true;
             if (!vm.session.materials) {
                 vm.session.materials = [];
