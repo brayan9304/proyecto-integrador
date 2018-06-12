@@ -26,6 +26,18 @@ entity Material {
     materialFile AnyBlob required
 }
 
+entity Post{
+	id Long required,
+    name String required,
+    content String required,
+    materialFile AnyBlob required
+}
+
+entity Comment{
+	id Long required,
+    content String required,
+    date ZonedDateTime required
+}
 relationship OneToMany {
 	Course{session} to Session
 }
@@ -37,7 +49,16 @@ relationship OneToMany {
 relationship ManyToMany {
 	Session{Material(id)} to Material
 }
+relationship OneToMany {
+	Professor{post} to Post
+}
 
+relationship OneToMany {
+	Post{comment} to Comment
+}
+relationship OneToMany {
+	Professor{comment} to Comment
+}
 
 dto * with mapstruct
 

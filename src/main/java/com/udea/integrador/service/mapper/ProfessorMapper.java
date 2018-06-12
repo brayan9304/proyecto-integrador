@@ -12,6 +12,8 @@ import org.mapstruct.*;
 public interface ProfessorMapper extends EntityMapper <ProfessorDTO, Professor> {
     
     @Mapping(target = "courses", ignore = true)
+    @Mapping(target = "posts", ignore = true)
+    @Mapping(target = "comments", ignore = true)
     Professor toEntity(ProfessorDTO professorDTO); 
     default Professor fromId(Long id) {
         if (id == null) {

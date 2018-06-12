@@ -1,0 +1,38 @@
+
+<div>
+    <h2><span>Post</span> {{vm.post.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{vm.post.name}}</span>
+        </dd>
+        <dt><span>Content</span></dt>
+        <dd>
+            <span>{{vm.post.content}}</span>
+        </dd>
+        <dt><span>Material File</span></dt>
+        <dd>
+            <div ng-if="vm.post.materialFile">
+                <a ng-click="vm.openFile(vm.post.materialFileContentType, vm.post.materialFile)">open</a>
+                {{vm.post.materialFileContentType}}, {{vm.byteSize(vm.post.materialFile)}}
+            </div>
+        </dd>
+        <dt><span>Professor</span></dt>
+        <dd>
+            <a ui-sref="professor-pi-detail({id:vm.post.professorId})">{{vm.post.professorId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="post-pi-detail.edit({id:vm.post.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

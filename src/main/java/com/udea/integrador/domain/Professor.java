@@ -38,6 +38,14 @@ public class Professor implements Serializable {
     @JsonIgnore
     private Set<Course> courses = new HashSet<>();
 
+    @OneToMany(mappedBy = "professor")
+    @JsonIgnore
+    private Set<Post> posts = new HashSet<>();
+
+    @OneToMany(mappedBy = "professor")
+    @JsonIgnore
+    private Set<Comment> comments = new HashSet<>();
+
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -109,6 +117,56 @@ public class Professor implements Serializable {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public Professor posts(Set<Post> posts) {
+        this.posts = posts;
+        return this;
+    }
+
+    public Professor addPost(Post post) {
+        this.posts.add(post);
+        post.setProfessor(this);
+        return this;
+    }
+
+    public Professor removePost(Post post) {
+        this.posts.remove(post);
+        post.setProfessor(null);
+        return this;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public Professor comments(Set<Comment> comments) {
+        this.comments = comments;
+        return this;
+    }
+
+    public Professor addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setProfessor(this);
+        return this;
+    }
+
+    public Professor removeComment(Comment comment) {
+        this.comments.remove(comment);
+        comment.setProfessor(null);
+        return this;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 

@@ -2,9 +2,9 @@
 
 describe('Controller Tests', function() {
 
-    describe('Professor Management Detail Controller', function() {
+    describe('Comment Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockPreviousState, MockProfessor, MockCourse, MockPost, MockComment;
+        var MockEntity, MockPreviousState, MockComment, MockProfessor, MockPost;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -12,10 +12,9 @@ describe('Controller Tests', function() {
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
             MockPreviousState = jasmine.createSpy('MockPreviousState');
-            MockProfessor = jasmine.createSpy('MockProfessor');
-            MockCourse = jasmine.createSpy('MockCourse');
-            MockPost = jasmine.createSpy('MockPost');
             MockComment = jasmine.createSpy('MockComment');
+            MockProfessor = jasmine.createSpy('MockProfessor');
+            MockPost = jasmine.createSpy('MockPost');
             
 
             var locals = {
@@ -23,20 +22,19 @@ describe('Controller Tests', function() {
                 '$rootScope': $rootScope,
                 'entity': MockEntity,
                 'previousState': MockPreviousState,
+                'Comment': MockComment,
                 'Professor': MockProfessor,
-                'Course': MockCourse,
-                'Post': MockPost,
-                'Comment': MockComment
+                'Post': MockPost
             };
             createController = function() {
-                $injector.get('$controller')("ProfessorPiDetailController", locals);
+                $injector.get('$controller')("CommentPiDetailController", locals);
             };
         }));
 
 
         describe('Root Scope Listening', function() {
             it('Unregisters root scope listener upon scope destruction', function() {
-                var eventType = 'proyectoIntegradorApp:professorUpdate';
+                var eventType = 'proyectoIntegradorApp:commentUpdate';
 
                 createController();
                 expect($rootScope.$$listenerCount[eventType]).toEqual(1);

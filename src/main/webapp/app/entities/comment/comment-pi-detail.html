@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span>Comment</span> {{vm.comment.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Content</span></dt>
+        <dd>
+            <span>{{vm.comment.content}}</span>
+        </dd>
+        <dt><span>Date</span></dt>
+        <dd>
+            <span>{{vm.comment.date | date:'medium'}}</span>
+        </dd>
+        <dt><span>Professor</span></dt>
+        <dd>
+            <a ui-sref="professor-pi-detail({id:vm.comment.professorId})">{{vm.comment.professorId}}</a>
+        </dd>
+        <dt><span>Post</span></dt>
+        <dd>
+            <a ui-sref="post-pi-detail({id:vm.comment.postId})">{{vm.comment.postId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="comment-pi-detail.edit({id:vm.comment.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

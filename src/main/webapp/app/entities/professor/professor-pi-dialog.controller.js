@@ -5,15 +5,17 @@
         .module('proyectoIntegradorApp')
         .controller('ProfessorPiDialogController', ProfessorPiDialogController);
 
-    ProfessorPiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Professor', 'Course'];
+    ProfessorPiDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Professor', 'Course', 'Post', 'Comment'];
 
-    function ProfessorPiDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Professor, Course) {
+    function ProfessorPiDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Professor, Course, Post, Comment) {
         var vm = this;
 
         vm.professor = entity;
         vm.clear = clear;
         vm.save = save;
         vm.courses = Course.query();
+        vm.posts = Post.query();
+        vm.comments = Comment.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

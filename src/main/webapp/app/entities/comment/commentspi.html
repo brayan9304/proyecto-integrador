@@ -1,0 +1,66 @@
+<div>
+    <h2>Comments</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="comment-pi.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Comment
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Content</span></th>
+                    <th><span>Date</span></th>
+                    <th><span>Professor</span></th>
+                    <th><span>Post</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="comment in vm.comments track by comment.id">
+                    <td><a ui-sref="comment-pi-detail({id:comment.id})">{{comment.id}}</a></td>
+                    <td>{{comment.content}}</td>
+                    <td>{{comment.date | date:'medium'}}</td>
+                    <td>
+                        <a ui-sref="professor-pi-detail({id:comment.professorId})">{{comment.professorId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="post-pi-detail({id:comment.postId})">{{comment.postId}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="comment-pi-detail({id:comment.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="comment-pi.edit({id:comment.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="comment-pi.delete({id:comment.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

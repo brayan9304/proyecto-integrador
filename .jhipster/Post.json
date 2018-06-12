@@ -2,49 +2,44 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "course",
-            "otherEntityName": "course",
-            "otherEntityRelationshipName": "professor"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "post",
-            "otherEntityName": "post",
-            "otherEntityRelationshipName": "professor"
+            "relationshipName": "professor",
+            "otherEntityName": "professor",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "one-to-many",
             "relationshipName": "comment",
             "otherEntityName": "comment",
-            "otherEntityRelationshipName": "professor"
+            "otherEntityRelationshipName": "post"
         }
     ],
     "fields": [
         {
-            "fieldName": "userName",
+            "fieldName": "name",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "email",
+            "fieldName": "content",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "relatedUserId",
-            "fieldType": "Long",
+            "fieldName": "materialFile",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any",
             "fieldValidateRules": [
                 "required"
             ]
         }
     ],
-    "changelogDate": "20171015005958",
-    "entityTableName": "professor",
+    "changelogDate": "20180612062324",
+    "entityTableName": "post",
     "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl",

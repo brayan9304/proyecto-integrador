@@ -5,9 +5,9 @@
         .module('proyectoIntegradorApp')
         .controller('ProfessorPiDetailController', ProfessorPiDetailController);
 
-    ProfessorPiDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Professor', 'Course'];
+    ProfessorPiDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Professor', 'Course', 'Post', 'Comment'];
 
-    function ProfessorPiDetailController($scope, $rootScope, $stateParams, previousState, entity, Professor, Course) {
+    function ProfessorPiDetailController($scope, $rootScope, $stateParams, previousState, entity, Professor, Course, Post, Comment) {
         var vm = this;
 
         vm.professor = entity;

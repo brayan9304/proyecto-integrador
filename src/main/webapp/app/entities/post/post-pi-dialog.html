@@ -1,0 +1,84 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myPostLabel">Create or edit a Post</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.post.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.post.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                    ng-model="vm.post.name"
+                    required/>
+            <div ng-show="editForm.name.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.name.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_content">Content</label>
+            <input type="text" class="form-control" name="content" id="field_content"
+                    ng-model="vm.post.content"
+                    required/>
+            <div ng-show="editForm.content.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.content.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setMaterialFile($file, vm.post)">
+            <label class="control-label" for="field_materialFile">Material File</label>
+            <div>
+                <div ng-if="vm.post.materialFile" class="help-block clearfix">
+                    <a class="pull-left" ng-click="vm.openFile(vm.post.materialFileContentType, vm.post.materialFile)">open</a><br>
+                    <span class="pull-left">{{vm.post.materialFileContentType}}, {{vm.byteSize(vm.post.materialFile)}}</span>
+                    <button type="button" ng-click="vm.post.materialFile=null;vm.post.materialFileContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setMaterialFile($file, vm.post)">
+                    Add blob
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="materialFile" id="field_materialFile"
+                    ng-model="vm.post.materialFile"
+                    required/>
+            <input type="hidden" class="form-control" name="materialFileContentType" id="field_materialFileContentType"
+                    ng-model="vm.post.materialFileContentType" />
+            <div ng-show="editForm.materialFile.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.materialFile.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_professor">Professor</label>
+            <select class="form-control" id="field_professor" name="professor" ng-model="vm.post.professorId" ng-options="professor.id as professor.id for professor in vm.professors"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
